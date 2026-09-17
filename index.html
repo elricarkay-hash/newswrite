@@ -498,14 +498,6 @@
       }
     }
 
-    .lab-sidebar .pyramid-text {
-      font-size: 0.95rem;
-      padding: 16px;
-      background: #181820;
-      border: 1px solid var(--border);
-      min-height: 120px;
-    }
-
     .article-text {
       font-size: 1.15rem;
       line-height: 1.9;
@@ -599,7 +591,7 @@
 <body>
 
   <div class="canvas">
-    <h1>Interactive Journalism Modules</h1>
+    <h1>News Writing 101</h1>
     <div class="subtitle">Live Masterclass Dashboard</div>
 
     <!-- SECTION 1: NEWS GATHERING -->
@@ -751,8 +743,8 @@
       </div>
     </div>
 
-    <!-- SECTION 6: LIVE LAB -->
-    <h2>6. Live Deconstruction Lab</h2>
+    <!-- SECTION 6: LIVE LAB 1 (ENGLISH) -->
+    <h2>6. Live Deconstruction Lab (English)</h2>
     <div class="lab-container">
       <div class="lab-header">
         <div>
@@ -764,27 +756,25 @@
         </a>
       </div>
       
-      <div class="lab-body">
+      <div class="lab-body" id="lab-body-1">
         <!-- Left Column: Interactive Lab Pyramid -->
         <div class="lab-sidebar">
           <div class="pyramid-container" style="max-width: 100%;">
-            <div class="p-layer p-top" onclick="analyzeLab('lead')" style="height: 50px; font-size: 0.9rem;">The Lead</div>
-            <div class="p-layer p-mid" onclick="analyzeLab('body')" style="height: 50px; font-size: 0.9rem;">The Body</div>
-            <div class="p-layer p-bot" onclick="analyzeLab('tail')" style="height: 50px; font-size: 0.9rem;">The Tail</div>
-          </div>
-          <div id="pyramid-text-lab" class="pyramid-text">
-            Click the pyramid layers above to isolate and define the corresponding structural block in the text.
+            <div class="p-layer p-top" onclick="analyzeLab('lead', 1)" style="height: 50px; font-size: 0.9rem;">The Lead</div>
+            <div class="p-layer p-mid" onclick="analyzeLab('body', 1)" style="height: 50px; font-size: 0.9rem;">The Body</div>
+            <div class="p-layer p-bot" onclick="analyzeLab('tail', 1)" style="height: 50px; font-size: 0.9rem;">The Tail</div>
           </div>
         </div>
 
         <!-- Right Column: The Article -->
-        <div class="article-text" id="article-text">
-          <div class="struct-layer layer-lead" id="layer-lead">
+        <div class="article-text" id="article-text-1">
+          <div class="struct-layer layer-lead" id="layer-lead-1">
             <p><span class="t-where">MANILA, Philippines</span> – <span class="t-who">The House of Representatives</span> on <span class="t-when">Wednesday, September 16</span>, <span class="t-what">summoned Meta Platforms CEO Mark Zuckerberg to respond to concerns over child safety on its platforms.</span></p>
-            <p><span class="t-who">The House</span> also <span class="t-what">deferred action on the proposed P19.49-billion budget of the Department of Information and Communications Technology (DICT) and its attached agencies for 2027</span> pending resolution of issues involving Meta and online safety.</p>
           </div>
 
-          <div class="struct-layer layer-body" id="layer-body">
+          <div class="struct-layer layer-body" id="layer-body-1">
+            <p><span class="t-how">The House also deferred action on the proposed P19.49-billion budget of the Department of Information and Communications Technology (DICT) and its attached agencies for 2027</span> <span class="t-why">pending resolution of issues involving Meta and online safety.</span></p>
+
             <p>The DICT, in a social media post on Wednesday evening, said <span class="t-why">the issues with Meta were related to the Online Sexual Abuse and Exploitation of Children (OSAEC) and Child Sexual Abuse and Exploitation Materials (CSAEM).</span> These were seen as “grave threats” demanding action and accountability.</p>
             
             <p>In addition to the OSAEC and CSAEM issues, <span class="t-why">further harms were also being facilitated or amplified on major platforms, including online illegal gambling, cyberbullying, social media addiction, depression, and related mental health risks that might endanger Filipinos, especially the young.</span></p>
@@ -794,7 +784,7 @@
             <p>The DICT, in its statement, said it would continue taking Meta to task for any missteps it makes, adding that <span class="t-why">“accountability cannot be optional.”</span> “The safety and welfare of Filipino children must remain paramount. Technology companies that operate in the Philippines must be held to the highest standards of responsibility. Persistent failure to address these risks erodes public trust and cannot be tolerated,” it added.</p>
           </div>
 
-          <div class="struct-layer layer-tail" id="layer-tail">
+          <div class="struct-layer layer-tail" id="layer-tail-1">
             <p><span class="t-context">In a separate DICT post early on Thursday morning, the House of Representatives said it summoned Meta CEO Mark Zuckerberg to face the DICT to respond to its concerns surrounding harmful online content and platform accountability, alongside hopefully setting up measures to improve online safety for Philippine users.</span></p>
           </div>
         </div>
@@ -802,20 +792,86 @@
 
       <!-- Dynamic Bottom Toolbar -->
       <div class="toolbar">
-        <div id="lead-tools" class="tool-group">
-          <button class="tool-btn" onclick="highlight('who', 'var(--indigo)')"><div class="dot" style="background: var(--indigo);"></div> Isolate WHO</button>
-          <button class="tool-btn" onclick="highlight('what', 'var(--rose)')"><div class="dot" style="background: var(--rose);"></div> Isolate WHAT</button>
-          <button class="tool-btn" onclick="highlight('where', 'var(--emerald)')"><div class="dot" style="background: var(--emerald);"></div> Isolate WHERE</button>
-          <button class="tool-btn" onclick="highlight('when', 'var(--amber)')"><div class="dot" style="background: var(--amber);"></div> Isolate WHEN</button>
+        <div id="lead-tools-1" class="tool-group">
+          <button class="tool-btn" onclick="highlight('who', 'var(--indigo)', 1)"><div class="dot" style="background: var(--indigo);"></div> Isolate WHO</button>
+          <button class="tool-btn" onclick="highlight('what', 'var(--rose)', 1)"><div class="dot" style="background: var(--rose);"></div> Isolate WHAT</button>
+          <button class="tool-btn" onclick="highlight('where', 'var(--emerald)', 1)"><div class="dot" style="background: var(--emerald);"></div> Isolate WHERE</button>
+          <button class="tool-btn" onclick="highlight('when', 'var(--amber)', 1)"><div class="dot" style="background: var(--amber);"></div> Isolate WHEN</button>
         </div>
-        <div id="body-tools" class="tool-group">
-          <button class="tool-btn" style="border-color: rgba(6, 182, 212, 0.4);" onclick="highlight('how', 'var(--cyan)')"><div class="dot" style="background: var(--cyan);"></div> Isolate HOW</button>
-          <button class="tool-btn" style="border-color: rgba(217, 70, 239, 0.4);" onclick="highlight('why', 'var(--fuchsia)')"><div class="dot" style="background: var(--fuchsia);"></div> Isolate WHY</button>
+        <div id="body-tools-1" class="tool-group">
+          <button class="tool-btn" style="border-color: rgba(6, 182, 212, 0.4);" onclick="highlight('how', 'var(--cyan)', 1)"><div class="dot" style="background: var(--cyan);"></div> Isolate HOW</button>
+          <button class="tool-btn" style="border-color: rgba(217, 70, 239, 0.4);" onclick="highlight('why', 'var(--fuchsia)', 1)"><div class="dot" style="background: var(--fuchsia);"></div> Isolate WHY</button>
         </div>
-        <div id="tail-tools" class="tool-group">
-          <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)')"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
+        <div id="tail-tools-1" class="tool-group">
+          <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)', 1)"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
         </div>
-        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab()">
+        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(1)">
+          <div class="dot" style="background: var(--text-muted);"></div> Reset Lab
+        </button>
+      </div>
+    </div>
+
+    <!-- SECTION 7: LIVE LAB 2 (TAGALOG) -->
+    <h2>7. Live Deconstruction Lab (Filipino)</h2>
+    <div class="lab-container">
+      <div class="lab-header">
+        <div>
+          <span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: GMA NEWS</span>
+          <span style="font-weight: 400; opacity: 0.7;">SEPT 16, 2026</span>
+        </div>
+        <a href="https://www.gmanetwork.com/news/balitambayan/balita/1002605/ilang-nagpo-protesta-nagtipon-tipon-sa-labas-ng-icc-ikatlong-status-conference-sa-kaso-vs-ex-pre/story/" target="_blank">
+          View Original Article ↗
+        </a>
+      </div>
+      
+      <div class="lab-body" id="lab-body-2">
+        <!-- Left Column: Interactive Lab Pyramid -->
+        <div class="lab-sidebar">
+          <div class="pyramid-container" style="max-width: 100%;">
+            <div class="p-layer p-top" onclick="analyzeLab('lead', 2)" style="height: 50px; font-size: 0.9rem;">The Lead</div>
+            <div class="p-layer p-mid" onclick="analyzeLab('body', 2)" style="height: 50px; font-size: 0.9rem;">The Body</div>
+            <div class="p-layer p-bot" onclick="analyzeLab('tail', 2)" style="height: 50px; font-size: 0.9rem;">The Tail</div>
+          </div>
+        </div>
+
+        <!-- Right Column: The Article -->
+        <div class="article-text" id="article-text-2">
+          <div class="struct-layer layer-lead" id="layer-lead-2">
+            <p>Sa ikatlong status conference ng <span class="t-where">International Criminal Court (ICC) Trial Chamber</span> bago ang pagpapatuloy ng pagdinig sa kaso ni dating Pangulong Rodrigo Duterte, <span class="t-what">nagsagawa ng kilos-protesta</span> <span class="t-who">ang ilang grupo ng mga Pilipinong manggagawa at naninirahan sa Netherlands</span> <span class="t-when">nitong Miyerkoles</span> (oras sa Pilipinas).</p>
+          </div>
+
+          <div class="struct-layer layer-body" id="layer-body-2">
+            <p><span class="t-why">Panawagan nila sa mga Dutch at maging sa ICC, ituloy ang pagdetine kay Duterte.</span> Anila, naging inspirasyon sa buong mundo ang paglilitis sa dating pangulo na itinuring umano ang sarili bilang "untouchable".</p>
+            
+            <p>Ang ibang grupo naman, ginamit ang pagkakataon para <span class="t-why">ipanawagan ang pag-convict kay Vice President Sara Duterte</span>, na anak ni Rodrigo, na nililitis ng Senate impeachment court sa Pilipinas.</p>
+            
+            <p>Inihayag naman ng mga tagasuporta ng dating pangulo, na iilan lang ang nakapunta sa tapat ng ICC ngayong araw ng status conference. <span class="t-how">Ayon sa isa sa kanila, wala silang nakaplanong aktibidad ngayong araw, pero nakapasok siya at ilan pang kasama sa loob ng ICC para panoorin ang pagdinig.</span></p>
+            
+            <p>Kalahating oras bago ang itinakdang oras ng pagsisimula ng ICC Trial Chamber para sa status conference, wala pa ring impormasyon kung haharap sa pagdinig ang nakatatandang Duterte.</p>
+          </div>
+
+          <div class="struct-layer layer-tail" id="layer-tail-2">
+            <p><span class="t-context">Hindi pa isinasapubliko ng ICC Registry ang anumang dokumento patungkol sa maaaring waiver ng depensa, gayundin ang oposisyon dito ng prosekusyon at abogado ng mga drug war victim. Pero nang idaos na ang pagdinig, nakitang dumalo si Duterte, at muling nasilayan ng publiko matapos ang mahigit isang taon matapos siyang madetine sa ICC.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Bottom Toolbar -->
+      <div class="toolbar">
+        <div id="lead-tools-2" class="tool-group">
+          <button class="tool-btn" onclick="highlight('who', 'var(--indigo)', 2)"><div class="dot" style="background: var(--indigo);"></div> Isolate WHO</button>
+          <button class="tool-btn" onclick="highlight('what', 'var(--rose)', 2)"><div class="dot" style="background: var(--rose);"></div> Isolate WHAT</button>
+          <button class="tool-btn" onclick="highlight('where', 'var(--emerald)', 2)"><div class="dot" style="background: var(--emerald);"></div> Isolate WHERE</button>
+          <button class="tool-btn" onclick="highlight('when', 'var(--amber)', 2)"><div class="dot" style="background: var(--amber);"></div> Isolate WHEN</button>
+        </div>
+        <div id="body-tools-2" class="tool-group">
+          <button class="tool-btn" style="border-color: rgba(6, 182, 212, 0.4);" onclick="highlight('how', 'var(--cyan)', 2)"><div class="dot" style="background: var(--cyan);"></div> Isolate HOW</button>
+          <button class="tool-btn" style="border-color: rgba(217, 70, 239, 0.4);" onclick="highlight('why', 'var(--fuchsia)', 2)"><div class="dot" style="background: var(--fuchsia);"></div> Isolate WHY</button>
+        </div>
+        <div id="tail-tools-2" class="tool-group">
+          <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)', 2)"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
+        </div>
+        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(2)">
           <div class="dot" style="background: var(--text-muted);"></div> Reset Lab
         </button>
       </div>
@@ -903,18 +959,17 @@
       }
     }
 
-    // Live Lab Logic
-    function analyzeLab(layer) {
-      const layers = document.querySelectorAll('.struct-layer');
-      const leadTools = document.getElementById('lead-tools');
-      const bodyTools = document.getElementById('body-tools');
-      const tailTools = document.getElementById('tail-tools');
-      const labText = document.getElementById('pyramid-text-lab');
+    // Live Lab Logic (Updated to handle multiple labs)
+    function analyzeLab(layer, labId) {
+      const layers = document.querySelectorAll(`#lab-body-${labId} .struct-layer`);
+      const leadTools = document.getElementById(`lead-tools-${labId}`);
+      const bodyTools = document.getElementById(`body-tools-${labId}`);
+      const tailTools = document.getElementById(`tail-tools-${labId}`);
       
       leadTools.style.display = 'none';
       bodyTools.style.display = 'none';
       tailTools.style.display = 'none';
-      highlight('clear');
+      highlight('clear', null, labId);
       
       layers.forEach(el => {
         el.style.opacity = '0.25';
@@ -922,7 +977,7 @@
         el.style.borderLeftColor = 'transparent';
       });
 
-      const targetLayer = document.getElementById(`layer-${layer}`);
+      const targetLayer = document.getElementById(`layer-${layer}-${labId}`);
       if (targetLayer) {
         targetLayer.style.opacity = '1';
         targetLayer.style.paddingLeft = '20px';
@@ -931,20 +986,17 @@
       if (layer === 'lead') {
         leadTools.style.display = 'flex';
         targetLayer.style.borderLeftColor = 'var(--indigo)';
-        labText.innerHTML = `<strong style="color: #bfa3ff;">The Lead:</strong> Contains the most important 5Ws and H.`;
       } else if (layer === 'body') {
         bodyTools.style.display = 'flex';
         targetLayer.style.borderLeftColor = 'var(--rose)';
-        labText.innerHTML = `<strong style="color: #ff99cc;">The Body:</strong> Secondary information extending on the Why and How.`;
       } else if (layer === 'tail') {
         tailTools.style.display = 'flex';
         targetLayer.style.borderLeftColor = 'var(--emerald)';
-        labText.innerHTML = `<strong style="color: var(--emerald);">The Tail:</strong> Background information and additional context.`;
       }
     }
 
-    function highlight(target, color) {
-      const allSpans = document.querySelectorAll('.article-text span');
+    function highlight(target, color, labId) {
+      const allSpans = document.querySelectorAll(`#article-text-${labId} span`);
       allSpans.forEach(span => {
         span.style.backgroundColor = 'transparent';
         span.style.color = 'inherit';
@@ -953,7 +1005,7 @@
 
       if (target === 'clear') return;
 
-      const targetSpans = document.querySelectorAll(`.t-${target}`);
+      const targetSpans = document.querySelectorAll(`#article-text-${labId} .t-${target}`);
       targetSpans.forEach(span => {
         span.style.backgroundColor = color;
         span.style.color = (target === 'where' || target === 'when' || target === 'how' || target === 'context') ? '#000' : '#fff';
@@ -961,20 +1013,19 @@
       });
     }
 
-    function resetLab() {
-      const layers = document.querySelectorAll('.struct-layer');
+    function resetLab(labId) {
+      const layers = document.querySelectorAll(`#lab-body-${labId} .struct-layer`);
       layers.forEach(el => {
         el.style.opacity = '1';
         el.style.paddingLeft = '0px';
         el.style.borderLeftColor = 'transparent';
       });
       
-      document.getElementById('lead-tools').style.display = 'none';
-      document.getElementById('body-tools').style.display = 'none';
-      document.getElementById('tail-tools').style.display = 'none';
-      document.getElementById('pyramid-text-lab').innerHTML = "Click the pyramid layers above to isolate and define the corresponding structural block in the text.";
+      document.getElementById(`lead-tools-${labId}`).style.display = 'none';
+      document.getElementById(`body-tools-${labId}`).style.display = 'none';
+      document.getElementById(`tail-tools-${labId}`).style.display = 'none';
       
-      highlight('clear');
+      highlight('clear', null, labId);
     }
   </script>
 
