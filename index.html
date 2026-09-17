@@ -744,7 +744,7 @@
     </div>
 
     <!-- SECTION 6: LIVE LAB 1 (ENGLISH) -->
-    <h2>6. Live Deconstruction Lab (English)</h2>
+    <h2>6. Live Deconstruction Lab (English - Rappler)</h2>
     <div class="lab-container">
       <div class="lab-header">
         <div>
@@ -812,7 +812,7 @@
     </div>
 
     <!-- SECTION 7: LIVE LAB 2 (TAGALOG) -->
-    <h2>7. Live Deconstruction Lab (Filipino)</h2>
+    <h2>7. Live Deconstruction Lab (Filipino - GMA News)</h2>
     <div class="lab-container">
       <div class="lab-header">
         <div>
@@ -872,6 +872,79 @@
           <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)', 2)"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
         </div>
         <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(2)">
+          <div class="dot" style="background: var(--text-muted);"></div> Reset Lab
+        </button>
+      </div>
+    </div>
+
+    <!-- SECTION 8: LIVE LAB 3 (ENGLISH - MANILA BULLETIN) -->
+    <h2>8. Live Deconstruction Lab (English - Manila Bulletin)</h2>
+    <div class="lab-container">
+      <div class="lab-header">
+        <div>
+          <span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: MANILA BULLETIN</span>
+          <span style="font-weight: 400; opacity: 0.7;">SEPT 17, 2026</span>
+        </div>
+        <a href="https://mb.com.ph/2026/09/17/tumulo-ang-luha-padilla-emotional-over-seeing-duterte-in-icc-hearing" target="_blank">
+          View Original Article ↗
+        </a>
+      </div>
+      
+      <div class="lab-body" id="lab-body-3">
+        <!-- Left Column: Interactive Lab Pyramid -->
+        <div class="lab-sidebar">
+          <div class="pyramid-container" style="max-width: 100%;">
+            <div class="p-layer p-top" onclick="analyzeLab('lead', 3)" style="height: 50px; font-size: 0.9rem;">The Lead</div>
+            <div class="p-layer p-mid" onclick="analyzeLab('body', 3)" style="height: 50px; font-size: 0.9rem;">The Body</div>
+            <div class="p-layer p-bot" onclick="analyzeLab('tail', 3)" style="height: 50px; font-size: 0.9rem;">The Tail</div>
+          </div>
+        </div>
+
+        <!-- Right Column: The Article -->
+        <div class="article-text" id="article-text-3">
+          <div class="struct-layer layer-lead" id="layer-lead-3">
+            <p><span class="t-who">Senator Robin Padilla</span> on <span class="t-when">Thursday, Sept. 17</span>, <span class="t-what">said he was overcome with emotion upon seeing former President Rodrigo Duterte appear in person</span> <span class="t-where">before the International Criminal Court (ICC)</span>, but expressed sadness over the physical toll of his continued detention.</p>
+          </div>
+
+          <div class="struct-layer layer-body" id="layer-body-3">
+            <p><span class="t-why">Padilla made the remarks a day after Duterte appeared at an ICC status hearing in The Hague, marking the former president’s first public appearance since his arrest in Manila and transfer to the tribunal’s custody in March 2025.</span></p>
+            
+            <p><span class="t-why">Asked for his reaction to Duterte’s appearance and observations that he appeared well enough to face trial, Padilla said seeing the former president again initially brought him joy.</span></p>
+            
+            <p>“Ako po ay nabigla at hindi inaasahan na tumulo ang luha sa tuwa at nakita na siya (I was surprised and did not expect to shed tears of joy upon seeing him again),” Padilla said.</p>
+            
+            <p>However, he said his happiness was tempered by concern over Duterte’s condition after spending more than a year in detention.</p>
+            
+            <p>“Ngunit binalot ng lungkot dahil batid ko na malakas lang ang loob ni Tatay Digong. Kaya ng tapang at malasakit pero hindi na kaya ng 81-year-old niyang katawan ang kulungan (But it was also overshadowed by sadness because I know that Tatay Digong is only strong-willed. He has the courage and compassion, but his 81-year-old body can no longer endure imprisonment),” he added.</p>
+            
+            <p><span class="t-how">Duterte, 81, appeared at Wednesday’s hearing wearing a dark suit and white shirt and seated beside members of his defense team.</span></p>
+            
+            <p><span class="t-how">The status hearing focused on preparations for the presentation of the case, including discussions on prosecution witnesses and evidence and the amount of time the prosecution would need to present its case.</span></p>
+          </div>
+
+          <div class="struct-layer layer-tail" id="layer-tail-3">
+            <p><span class="t-context">Duterte faces charges before the ICC over alleged crimes against humanity linked to his administration’s anti-drug campaign.</span></p>
+            <p><span class="t-context">The former president has denied the allegations and previously maintained that the ICC has no jurisdiction over him.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Bottom Toolbar -->
+      <div class="toolbar">
+        <div id="lead-tools-3" class="tool-group">
+          <button class="tool-btn" onclick="highlight('who', 'var(--indigo)', 3)"><div class="dot" style="background: var(--indigo);"></div> Isolate WHO</button>
+          <button class="tool-btn" onclick="highlight('what', 'var(--rose)', 3)"><div class="dot" style="background: var(--rose);"></div> Isolate WHAT</button>
+          <button class="tool-btn" onclick="highlight('where', 'var(--emerald)', 3)"><div class="dot" style="background: var(--emerald);"></div> Isolate WHERE</button>
+          <button class="tool-btn" onclick="highlight('when', 'var(--amber)', 3)"><div class="dot" style="background: var(--amber);"></div> Isolate WHEN</button>
+        </div>
+        <div id="body-tools-3" class="tool-group">
+          <button class="tool-btn" style="border-color: rgba(6, 182, 212, 0.4);" onclick="highlight('how', 'var(--cyan)', 3)"><div class="dot" style="background: var(--cyan);"></div> Isolate HOW</button>
+          <button class="tool-btn" style="border-color: rgba(217, 70, 239, 0.4);" onclick="highlight('why', 'var(--fuchsia)', 3)"><div class="dot" style="background: var(--fuchsia);"></div> Isolate WHY</button>
+        </div>
+        <div id="tail-tools-3" class="tool-group">
+          <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)', 3)"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
+        </div>
+        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(3)">
           <div class="dot" style="background: var(--text-muted);"></div> Reset Lab
         </button>
       </div>
@@ -959,7 +1032,7 @@
       }
     }
 
-    // Live Lab Logic (Updated to handle multiple labs)
+    // Live Lab Logic (Handles multiple labs)
     function analyzeLab(layer, labId) {
       const layers = document.querySelectorAll(`#lab-body-${labId} .struct-layer`);
       const leadTools = document.getElementById(`lead-tools-${labId}`);
