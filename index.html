@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Journalism Masterclass: Interactive Tools</title>
+  <title>News Writing 101: Masterclass Dashboard</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap');
 
@@ -22,9 +22,6 @@
       --text-muted: #94A3B8;
     }
 
-    /* =========================================
-       GLOBAL TYPOGRAPHY & LAYOUT
-       ========================================= */
     body {
       font-family: 'Outfit', sans-serif;
       background-color: var(--bg-dark);
@@ -38,554 +35,121 @@
       background-attachment: fixed;
     }
 
-    .canvas {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+    .canvas { max-width: 1000px; margin: 0 auto; }
 
-    h1, h2, h3, h4 {
-      font-family: 'Space Grotesk', sans-serif;
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; margin: 0; letter-spacing: -0.02em; }
 
     h1 {
-      font-size: 3.5rem;
-      text-align: center;
+      font-size: 3.5rem; text-align: center;
       background: linear-gradient(135deg, #fff, #a5b4fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       margin-bottom: 12px;
     }
 
     .subtitle {
-      text-align: center;
-      font-size: 1.1rem;
-      color: var(--indigo);
-      margin-bottom: 60px;
-      font-weight: 500;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      text-align: center; font-size: 1.1rem; color: var(--indigo);
+      margin-bottom: 60px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
     }
 
     h2 {
-      font-size: 1.75rem;
-      margin: 60px 0 25px 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #fff;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 15px;
+      font-size: 1.75rem; margin: 60px 0 25px 0; display: flex; align-items: center; gap: 12px; color: #fff;
+      border-bottom: 1px solid var(--border); padding-bottom: 15px;
     }
 
-    h2::before {
-      content: '';
-      display: block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--emerald);
-    }
+    h2::before { content: ''; display: block; width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); }
 
-    /* =========================================
-       NEWS GATHERING PILLS
-       ========================================= */
-    .pill-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 50px;
-      justify-content: center;
-    }
+    .intro-text { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; line-height: 1.8; padding: 20px; background: rgba(255,255,255,0.02); border-left: 4px solid var(--indigo); border-radius: 0 8px 8px 0; }
 
-    .pill {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+    /* Values & Hover Cards */
+    .grid-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 50px; }
+    .hover-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.3s ease; cursor: pointer; text-align: center; position: relative; overflow: hidden; }
+    .hover-card p { max-height: 0; opacity: 0; margin: 0; transition: all 0.4s ease; font-size: 0.95rem; color: var(--text-muted); }
+    .hover-card:hover p { max-height: 150px; opacity: 1; margin-top: 15px; }
+    .hover-card:hover { background: var(--surface-hover); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-5px); }
 
-    .pill:hover {
-      background: rgba(111, 0, 255, 0.15);
-      color: #fff;
-      border-color: var(--indigo);
-      transform: translateY(-2px);
-    }
-
-    /* =========================================
-       CARDS & GRIDS
-       ========================================= */
-    .flip-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-bottom: 40px;
-    }
-
-    .flip-card {
-      background-color: transparent;
-      height: 220px;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-
-    .flip-card:hover .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .flip-card-front, .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      box-sizing: border-box;
-      background: var(--surface);
-    }
-
-    .flip-card-front {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-    }
-
+    /* Core Qualities Flip Cards */
+    .flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .flip-card { background-color: transparent; height: 260px; perspective: 1000px; cursor: pointer; }
+    .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+    .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; background: var(--surface); }
+    .flip-card-front { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; }
     .flip-card-front.acc { color: var(--indigo); border-top: 4px solid var(--indigo); }
     .flip-card-front.brev { color: var(--rose); border-top: 4px solid var(--rose); }
     .flip-card-front.clar { color: var(--emerald); border-top: 4px solid var(--emerald); }
+    .flip-card-front.obj { color: var(--cyan); border-top: 4px solid var(--cyan); }
+    .flip-card-back { background: var(--surface-hover); transform: rotateY(180deg); font-size: 0.95rem; color: var(--text-main); flex-direction: column; text-align: center; }
 
-    .flip-card-back {
-      background: var(--surface-hover);
-      transform: rotateY(180deg);
-      font-size: 1.05rem;
-      color: var(--text-main);
-      flex-direction: column;
-      text-align: center;
-    }
+    /* News Gathering Pills */
+    .pill-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 50px; justify-content: center; }
+    .pill { background: var(--surface); border: 1px solid var(--border); padding: 10px 20px; border-radius: 30px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.3s ease; font-size: 0.95rem; }
+    .pill:hover { background: rgba(111, 0, 255, 0.15); color: #fff; border-color: var(--indigo); transform: translateY(-2px); }
 
-    /* Guidelines Grid */
-    .guideline-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-      margin-bottom: 40px;
-    }
+    /* Hard VS Soft News */
+    .toggle-wrapper { display: flex; gap: 12px; margin-bottom: 24px; background: var(--surface); padding: 6px; border-radius: 30px; border: 1px solid var(--border); width: max-content; }
+    .toggle-btn { background: transparent; color: var(--text-muted); border: none; padding: 10px 24px; font-size: 1rem; font-family: 'Space Grotesk', sans-serif; font-weight: 600; border-radius: 24px; cursor: pointer; transition: all 0.2s ease; }
+    .toggle-btn:hover { color: #fff; }
+    .toggle-btn.active-hard { background: rgba(111, 0, 255, 0.15); color: #bfa3ff; }
+    .toggle-btn.active-soft { background: rgba(255, 0, 127, 0.15); color: #ff99cc; }
 
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px;
-      border-left: 4px solid var(--rose);
-      color: var(--text-main);
-      font-size: 1.05rem;
-      transition: transform 0.2s;
-    }
+    /* Inverted Pyramid */
+    .pyramid-container { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 100%; max-width: 550px; margin: 0 auto; }
+    .p-layer { display: flex; justify-content: center; align-items: center; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, filter 0.2s ease; height: 65px; color: #fff; width: 100%; }
+    .p-layer:hover { filter: brightness(1.15); transform: scale(1.02); }
+    .p-top { background: var(--indigo); clip-path: polygon(0% 0%, 100% 0%, 83.3% 100%, 16.7% 100%); }
+    .p-mid { background: var(--rose); clip-path: polygon(16.7% 0%, 83.3% 0%, 66.6% 100%, 33.4% 100%); }
+    .p-bot { background: var(--emerald); clip-path: polygon(33.4% 0%, 66.6% 0%, 50% 100%, 50% 100%); color: #000; }
+    .pyramid-text { margin-top: 24px; font-size: 1.05rem; padding: 24px; border-radius: 12px; background: transparent; border: 1px dashed var(--border); min-height: 100px; color: var(--text-muted); line-height: 1.6; text-align: center; margin-bottom: 50px; }
 
-    .guide-card:hover {
-      transform: translateX(5px);
-      background: var(--surface-hover);
-    }
+    /* Lead Types Display */
+    .guideline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 40px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; border-left: 4px solid var(--rose); color: var(--text-main); font-size: 1.05rem; transition: transform 0.2s; }
+    .guide-card:hover { transform: translateX(5px); background: var(--surface-hover); }
+    .lead-section-title { font-family: 'Space Grotesk', sans-serif; color: var(--text-main); margin: 20px 0 10px 0; font-size: 1.1rem; }
+    .lead-buttons { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .lead-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 30px; font-family: 'Outfit', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; font-size: 0.9rem; }
+    .lead-btn:hover { color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+    .lead-btn.active { background: rgba(111, 0, 255, 0.15); color: var(--indigo); border-color: var(--indigo); }
+    .lead-display-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 30px; min-height: 140px; font-size: 1.1rem; color: var(--text-main); line-height: 1.7; margin-bottom: 40px; }
+    .lead-example { margin-top: 20px; padding: 15px 20px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; font-style: italic; color: #E2E8F0; }
 
-    /* Interactive Hover Cards */
-    .grid-5 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-bottom: 50px;
-    }
+    /* Interactive Tabs (Pointers) */
+    .tab-container { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 50px; }
+    .tab-buttons { display: flex; flex-wrap: wrap; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); }
+    .tab-btn { flex: 1; padding: 16px 10px; background: transparent; border: none; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; }
+    .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .tab-btn.active { color: var(--emerald); border-bottom: 3px solid var(--emerald); background: rgba(80, 200, 120, 0.05); }
+    .tab-content { display: none; padding: 32px; animation: fadeIn 0.4s ease; }
+    .tab-content.active { display: block; }
+    .pointer-list { list-style: none; padding: 0; margin: 0; }
+    .pointer-list li { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed var(--border); font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; }
+    .pointer-list li:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .pointer-list strong { color: var(--text-main); display: block; margin-bottom: 4px; font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; }
 
-    .hover-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hover-card p {
-      max-height: 0;
-      opacity: 0;
-      margin: 0;
-      transition: all 0.4s ease;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    .hover-card:hover p {
-      max-height: 100px;
-      opacity: 1;
-      margin-top: 15px;
-    }
-
-    .hover-card:hover {
-      background: var(--surface-hover);
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-5px);
-    }
-
-    /* =========================================
-       LEAD DISPLAY
-       ========================================= */
-    .lead-buttons {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .lead-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+    /* Deconstruction Labs */
+    .lab-container { background: var(--surface); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 60px; }
+    .lab-header { background: #181820; padding: 16px 24px; border-bottom: 1px solid var(--border); font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .lab-header a { color: var(--cyan); text-decoration: none; background: rgba(6, 182, 212, 0.1); padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.5px; transition: background 0.2s; }
+    .lab-header a:hover { background: rgba(6, 182, 212, 0.2); }
+    .lab-body { display: grid; grid-template-columns: 300px 1fr; gap: 32px; padding: 32px; }
+    @media (max-width: 768px) { .lab-body { grid-template-columns: 1fr; } }
+    .article-text { font-size: 1.1rem; line-height: 1.9; color: #E2E8F0; max-height: 400px; overflow-y: auto; padding-right: 16px; }
+    .article-text::-webkit-scrollbar { width: 6px; }
+    .article-text::-webkit-scrollbar-track { background: #181820; }
+    .article-text::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    .struct-layer { transition: opacity 0.3s ease, border-left-color 0.3s ease, padding-left 0.3s ease; border-left: 4px solid transparent; margin-bottom: 24px; }
+    .struct-layer p { margin: 0 0 16px 0; }
+    .article-text span { transition: background-color 0.3s ease, color 0.3s ease; border-radius: 4px; }
     
-    .lead-btn:hover {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.3);
-    }
+    .toolbar { display: flex; gap: 12px; padding: 20px 32px; background: #181820; border-top: 1px solid var(--border); flex-wrap: wrap; align-items: center; }
+    .tool-group { display: none; gap: 12px; animation: fadeIn 0.3s ease forwards; flex-wrap: wrap; }
+    .tool-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 6px 14px; border-radius: 6px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+    .tool-btn:hover { background: var(--surface-hover); color: #fff; border-color: rgba(255, 255, 255, 0.2); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
 
-    .lead-btn.active {
-      background: rgba(111, 0, 255, 0.15);
-      color: var(--indigo);
-      border-color: var(--indigo);
-    }
+    .analysis-box { display: none; padding: 20px 32px; background: rgba(111, 0, 255, 0.05); border-top: 1px dashed var(--indigo); font-size: 1.05rem; color: var(--text-main); line-height: 1.6; }
 
-    .lead-display-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 30px;
-      min-height: 120px;
-      font-size: 1.15rem;
-      color: var(--text-main);
-      line-height: 1.7;
-      margin-bottom: 40px;
-    }
-
-    .lead-example {
-      margin-top: 20px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 8px;
-      font-style: italic;
-      color: #E2E8F0;
-    }
-
-    /* =========================================
-       INTERACTIVE TABS (POINTERS)
-       ========================================= */
-    .tab-container {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 50px;
-    }
-
-    .tab-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      background: rgba(255,255,255,0.02);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 16px 20px;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .tab-btn:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.05);
-    }
-
-    .tab-btn.active {
-      color: var(--emerald);
-      border-bottom: 3px solid var(--emerald);
-      background: rgba(80, 200, 120, 0.05);
-    }
-
-    .tab-content {
-      display: none;
-      padding: 32px;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .pointer-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .pointer-list li {
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px dashed var(--border);
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .pointer-list li:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-
-    .pointer-list strong {
-      color: var(--text-main);
-      display: block;
-      margin-bottom: 4px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.15rem;
-    }
-
-    /* =========================================
-       INVERTED PYRAMID
-       ========================================= */
-    .pyramid-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      width: 100%;
-      max-width: 550px;
-      margin: 0 auto;
-    }
-
-    .p-layer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, filter 0.2s ease;
-      height: 65px;
-      color: #fff;
-      width: 100%;
-    }
-
-    .p-layer:hover {
-      filter: brightness(1.15);
-      transform: scale(1.02);
-    }
-
-    .p-top {
-      background: var(--indigo);
-      clip-path: polygon(0% 0%, 100% 0%, 83.3% 100%, 16.7% 100%);
-    }
-
-    .p-mid {
-      background: var(--rose);
-      clip-path: polygon(16.7% 0%, 83.3% 0%, 66.6% 100%, 33.4% 100%);
-    }
-
-    .p-bot {
-      background: var(--emerald);
-      clip-path: polygon(33.4% 0%, 66.6% 0%, 50% 100%, 50% 100%);
-      color: #000;
-    }
-
-    .pyramid-text {
-      margin-top: 24px;
-      font-size: 1.05rem;
-      padding: 24px;
-      border-radius: 12px;
-      background: transparent;
-      border: 1px dashed var(--border);
-      min-height: 100px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    /* =========================================
-       DECONSTRUCTION LAB
-       ========================================= */
-    .lab-container {
-      background: var(--surface);
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      overflow: hidden;
-      margin-bottom: 60px;
-    }
-
-    .lab-header {
-      background: #181820;
-      padding: 16px 24px;
-      border-bottom: 1px solid var(--border);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .lab-header a {
-      color: var(--cyan);
-      text-decoration: none;
-      background: rgba(6, 182, 212, 0.1);
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      letter-spacing: 0.5px;
-      transition: background 0.2s;
-    }
-    
-    .lab-header a:hover {
-      background: rgba(6, 182, 212, 0.2);
-    }
-
-    .lab-body {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 32px;
-      padding: 32px;
-    }
-
-    @media (max-width: 768px) {
-      .lab-body {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .article-text {
-      font-size: 1.15rem;
-      line-height: 1.9;
-      color: #E2E8F0;
-      max-height: 500px;
-      overflow-y: auto;
-      padding-right: 16px;
-    }
-
-    .article-text::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .article-text::-webkit-scrollbar-track {
-      background: #181820;
-    }
-
-    .article-text::-webkit-scrollbar-thumb {
-      background: #333;
-      border-radius: 4px;
-    }
-
-    .struct-layer {
-      transition: opacity 0.3s ease, border-left-color 0.3s ease, padding-left 0.3s ease;
-      border-left: 4px solid transparent;
-      margin-bottom: 24px;
-    }
-
-    .struct-layer p {
-      margin: 0 0 16px 0;
-    }
-
-    .article-text span {
-      transition: background-color 0.3s ease, color 0.3s ease;
-      border-radius: 4px;
-    }
-
-    /* =========================================
-       LAB TOOLBAR
-       ========================================= */
-    .toolbar {
-      display: flex;
-      gap: 12px;
-      padding: 24px 32px;
-      background: #181820;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .tool-group {
-      display: none;
-      gap: 12px;
-      animation: fadeIn 0.3s ease forwards;
-      flex-wrap: wrap;
-    }
-
-    .tool-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .tool-btn:hover {
-      background: var(--surface-hover);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
@@ -593,31 +157,32 @@
   <div class="canvas">
     <h1>News Writing 101</h1>
     <div class="subtitle">Live Masterclass Dashboard</div>
-
-    <!-- SECTION 1: NEWS GATHERING -->
-    <h2>1. Tips in News Gathering</h2>
-    <div class="pill-grid">
-      <div class="pill">See for your self</div>
-      <div class="pill">Find the person who knows</div>
-      <div class="pill">Compare all versions</div>
-      <div class="pill">Get both sides</div>
-      <div class="pill">Do not give up too easily</div>
-      <div class="pill">Be tactful and courteous</div>
-      <div class="pill">Make and keep friends</div>
-      <div class="pill">Get into print</div>
-      <div class="pill">Research</div>
-      <div class="pill">Observe proper attribution</div>
+    
+    <div class="intro-text">
+      <strong>The Strategic Gatekeeper:</strong> In the contemporary information ecosystem, the journalist functions as a strategic gatekeeper against the rising tide of disinformation. The role is not merely to transmit data, but to perform the disciplined distillation of "news"—the curated reportage of recent occurrences that demand public attention.
     </div>
 
-    <!-- SECTION 2: THE ABCS -->
-    <h2>2. The ABCs of News Writing</h2>
+    <!-- SECTION 1: NEWSWORTHINESS -->
+    <h2>1. The 7 Pillars of Newsworthiness</h2>
+    <div class="grid-values">
+      <div class="hover-card"><h3 style="color: var(--amber);">Timeliness</h3><p>Satisfies the urgent need for the most current information; the first-mover advantage.</p></div>
+      <div class="hover-card"><h3 style="color: var(--rose);">Proximity</h3><p>Drives relevance through the physical or emotional nearness of the event to the reader.</p></div>
+      <div class="hover-card"><h3 style="color: var(--indigo);">Significance</h3><p>Measures the magnitude of consequences; higher impact equals deeper engagement.</p></div>
+      <div class="hover-card"><h3 style="color: var(--emerald);">Prominence</h3><p>Capitalizes on the public’s inherent interest in well-known individuals or institutions.</p></div>
+      <div class="hover-card"><h3 style="color: var(--cyan);">Oddity</h3><p>Leverages the "shock value" of unique, bizarre, or extremely rare occurrences.</p></div>
+      <div class="hover-card"><h3 style="color: var(--fuchsia);">Conflict</h3><p>Engages the reader through the inherent drama of opposing forces, ideas, or power dynamics.</p></div>
+      <div class="hover-card"><h3 style="color: #a5b4fc;">Progress</h3><p>Highlights communal advancement or positive movement, fostering civic interest.</p></div>
+    </div>
+
+    <!-- SECTION 2: THE CORE QUALITIES -->
+    <h2>2. Core Qualities Checklist</h2>
     <div class="flip-grid">
       <div class="flip-card">
         <div class="flip-card-inner">
           <div class="flip-card-front acc">Accuracy</div>
           <div class="flip-card-back">
             <strong style="color: var(--indigo); font-size: 1.2rem; margin-bottom: 10px;">The First Rule</strong>
-            A story can be creative and compelling, but if it contains errors, it is worthless. Always check numbers, spelling of names, and basic facts. Accuracy always comes first.
+            Requires granular verification of numbers, spelling, and facts. A story can be stylistically brilliant, but a single factual error erodes institutional credibility.
           </div>
         </div>
       </div>
@@ -625,8 +190,8 @@
         <div class="flip-card-inner">
           <div class="flip-card-front brev">Brevity</div>
           <div class="flip-card-back">
-            <strong style="color: var(--rose); font-size: 1.2rem; margin-bottom: 10px;">Get to the point</strong>
-            Each word should do a job. If not, take it out. Don't be redundant. Say "8 a.m." — not "8 a.m. in the morning." 
+            <strong style="color: var(--rose); font-size: 1.2rem; margin-bottom: 10px;">Word Economy</strong>
+            Every word must justify its existence. Redundancy is the enemy of impact; a bloated narrative loses the reader before the core revelation.
           </div>
         </div>
       </div>
@@ -634,15 +199,52 @@
         <div class="flip-card-inner">
           <div class="flip-card-front clar">Clarity</div>
           <div class="flip-card-back">
-            <strong style="color: var(--emerald); font-size: 1.2rem; margin-bottom: 10px;">Leave no questions</strong>
-            Clarity starts with competent reporting. Understand your subject so completely that your story leaves it crystal-clear. Explain anything that wouldn't be obvious.
+            <strong style="color: var(--emerald); font-size: 1.2rem; margin-bottom: 10px;">The Antidote</strong>
+            The narrative must cut through official obfuscation. If the audience cannot comprehend the subject completely, the story fails as a democratic instrument.
+          </div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front obj">Objectivity</div>
+          <div class="flip-card-back">
+            <strong style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 10px;">Neutral Observer</strong>
+            The journalist must remain protected and neutral. Introducing bias or "preaching" destroys standing and renders reportage a mere opinion piece.
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SECTION 3: INVERTED PYRAMID -->
-    <h2 style="margin-top: 60px;">3. The Inverted Pyramid Style</h2>
+    <!-- SECTION 3: NEWS GATHERING & SOURCES -->
+    <h2>3. Strategic News Gathering</h2>
+    <div class="pill-grid">
+      <div class="pill">1. See for yourself</div>
+      <div class="pill">2. Find the person who knows</div>
+      <div class="pill">3. Compare all versions</div>
+      <div class="pill">4. Get both sides</div>
+      <div class="pill">5. Do not give up easily</div>
+      <div class="pill">6. Be tactful & courteous</div>
+      <div class="pill">7. Make and keep friends</div>
+      <div class="pill">8. Get into print</div>
+      <div class="pill">9. Research deeply</div>
+      <div class="pill">10. Observe proper attribution</div>
+    </div>
+
+    <!-- SECTION 4: HARD VS SOFT NEWS -->
+    <h2>4. Narrative Transformation</h2>
+    <div style="display: flex; gap: 20px; margin-bottom: 50px;">
+      <div style="flex: 1; background: rgba(111,0,255,0.05); padding: 24px; border-radius: 12px; border-top: 4px solid var(--indigo);">
+        <h3 style="color: var(--text-main); margin-bottom: 10px;">Hard News Structure</h3>
+        <p style="color: var(--text-muted); margin: 0;">Concrete facts reported without elaboration. Follows the Lead-Succeeding-Ending hierarchy where importance descends.</p>
+      </div>
+      <div style="flex: 1; background: rgba(255,0,127,0.05); padding: 24px; border-radius: 12px; border-top: 4px solid var(--rose);">
+        <h3 style="color: var(--text-main); margin-bottom: 10px;">Soft News Structure</h3>
+        <p style="color: var(--text-muted); margin: 0;">Permits impressions and narration. Frequently utilizes reverse order, saving the most compelling primary information for the end to create a lasting impression.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 5: INVERTED PYRAMID -->
+    <h2>5. The Architecture: Inverted Pyramid</h2>
     <div style="margin-bottom: 60px;">
       <div class="pyramid-container">
         <div class="p-layer p-top" onclick="showStandalonePyramid('lead')">The Lead</div>
@@ -650,114 +252,98 @@
         <div class="p-layer p-bot" onclick="showStandalonePyramid('tail')">The Tail</div>
       </div>
       <div id="pyramid-text-standalone" class="pyramid-text">
-        The Inverted Pyramid of news suggests that news be told in order of most interesting or important to least interesting or important. Click a layer to explore the structure.
+        The Inverted Pyramid is an essential tool for information efficiency. It caters to a busy public that requires the most vital facts immediately.
       </div>
     </div>
 
-    <!-- SECTION 4: WRITING THE LEAD & TYPES -->
-    <h2>4. Writing The Lead & Variations</h2>
-    
+    <!-- SECTION 6: LEAD CONSTRUCTION -->
+    <h2>6. Advanced Lead Construction</h2>
     <div style="background: rgba(111, 0, 255, 0.05); border-left: 4px solid var(--indigo); padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 30px;">
-      <h3 style="color: var(--indigo); margin-bottom: 8px;">The Angle</h3>
-      <p style="margin: 0; font-size: 1.1rem; color: var(--text-main);">The main idea of a news story and lead is called the "angle". It is the main point that the rest of the story will try to support.</p>
+      <h3 style="color: var(--indigo); margin-bottom: 8px;">The Angle & Constraints</h3>
+      <p style="margin: 0; font-size: 1.05rem; color: var(--text-main);">The main idea of a news story is the "angle". Lead constraints: Keep it under 30 words. Avoid starting with articles (A, An, The). Do not mention specific names unless widely recognized.</p>
     </div>
 
-    <h3 style="font-family: 'Space Grotesk'; margin-bottom: 20px; color: var(--text-muted);">Guidelines in Writing the Lead:</h3>
-    <div class="guideline-grid">
-      <div class="guide-card">Pack the most important info in one sentence.</div>
-      <div class="guide-card">Start with the most important or unusual idea of the news event.</div>
-      <div class="guide-card">Go direct to the point.</div>
-      <div class="guide-card">Rarely use the "when" and "where" leads.</div>
-      <div class="guide-card">Use less than 30 words.</div>
-      <div class="guide-card">Avoid starting with articles: a, an, the.</div>
-      <div class="guide-card">Do not mention names in the lead unless the person is well-known.</div>
-    </div>
-
-    <!-- Lead Types (Interactive) -->
-    <h3 style="font-family: 'Space Grotesk'; margin-bottom: 20px; color: var(--text-muted);">Types of Leads:</h3>
+    <!-- Lead Types Interactive -->
+    <div class="lead-section-title">I. The Straight Lead</div>
     <div class="lead-buttons">
       <button class="lead-btn active" id="btn-summary" onclick="showLead('summary')">Summary Lead</button>
-      <button class="lead-btn" id="btn-cartridge" onclick="showLead('cartridge')">Cartridge Lead</button>
-      <button class="lead-btn" id="btn-punch" onclick="showLead('punch')">Punch Lead</button>
-      <button class="lead-btn" id="btn-contrast" onclick="showLead('contrast')">Contrast Lead</button>
-      <button class="lead-btn" id="btn-staccato" onclick="showLead('staccato')">Staccato Lead</button>
+    </div>
+
+    <div class="lead-section-title">II. Novelty Leads (Interest Hooks)</div>
+    <div class="lead-buttons">
+      <button class="lead-btn" id="btn-astonisher" onclick="showLead('astonisher')">Astonisher</button>
+      <button class="lead-btn" id="btn-contrast" onclick="showLead('contrast')">Contrast</button>
+      <button class="lead-btn" id="btn-epigram" onclick="showLead('epigram')">Epigram</button>
+      <button class="lead-btn" id="btn-picture" onclick="showLead('picture')">Picture</button>
+      <button class="lead-btn" id="btn-background" onclick="showLead('background')">Background</button>
+      <button class="lead-btn" id="btn-parody" onclick="showLead('parody')">Parody</button>
+      <button class="lead-btn" id="btn-punch" onclick="showLead('punch')">Punch</button>
+      <button class="lead-btn" id="btn-quotation" onclick="showLead('quotation')">Quotation</button>
+      <button class="lead-btn" id="btn-question" onclick="showLead('question')">Question</button>
+    </div>
+
+    <div class="lead-section-title">III. Extended Leads (Technical Tools)</div>
+    <div class="lead-buttons">
+      <button class="lead-btn" id="btn-cartridge" onclick="showLead('cartridge')">Cartridge</button>
+      <button class="lead-btn" id="btn-freak" onclick="showLead('freak')">Freak</button>
+      <button class="lead-btn" id="btn-sequence" onclick="showLead('sequence')">Sequence</button>
+      <button class="lead-btn" id="btn-suspended" onclick="showLead('suspended')">Suspended Interest</button>
+      <button class="lead-btn" id="btn-staccato" onclick="showLead('staccato')">Staccato</button>
+      <button class="lead-btn" id="btn-figurative" onclick="showLead('figurative')">Figurative</button>
     </div>
 
     <div class="lead-display-box" id="lead-display">
-      <strong style="color: var(--indigo); font-family: 'Space Grotesk'; font-size: 1.3rem;">Summary Lead</strong><br>
-      The classic approach. Tells the reader what the story is about instantly without destroying the flow of the sentence. Remember: use short, simple declarative sentences and do not cram everything into one sentence. Never use an important/unusual word twice.
+      <strong style="color: var(--indigo); font-family: 'Space Grotesk'; font-size: 1.3rem;">Summary Lead (5Ws and 1H)</strong><br>
+      Summarizes the facts in one sentence. Use for breaking news where speed and factual density are paramount.
       <div class="lead-example" style="border-left: 3px solid var(--indigo);">
-        "The city council unanimously approved a ₱500-million infrastructure budget Tuesday morning to rehabilitate the downtown drainage system before the rainy season begins."
+        "The city council unanimously approved a ₱500-million infrastructure budget Tuesday morning to rehabilitate the downtown drainage system."
       </div>
     </div>
 
-    <!-- SECTION 5: POINTERS TABS -->
-    <h2>5. The Pointers in Newswriting</h2>
+    <!-- SECTION 7: POINTERS TABS -->
+    <h2>7. Syntax Command & Editorial Mandates</h2>
     <div class="tab-container">
       <div class="tab-buttons">
-        <button class="tab-btn active" onclick="openTab(event, 'tab-syntax')">Syntax & Structure</button>
-        <button class="tab-btn" onclick="openTab(event, 'tab-words')">Word Choice & Verbs</button>
-        <button class="tab-btn" onclick="openTab(event, 'tab-ethics')">Objectivity & Sourcing</button>
-        <button class="tab-btn" onclick="openTab(event, 'tab-focus')">Focus & Strategy</button>
+        <button class="tab-btn active" onclick="openTab(event, 'tab-syntax')">Syntax Command Center</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-para')">Paragraph Rules</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-ethics')">Ethical Integrity</button>
       </div>
 
-      <!-- Tab 1 -->
       <div id="tab-syntax" class="tab-content active">
         <ul class="pointer-list">
-          <li><strong>One idea per sentence</strong> As much as possible, write one-idea, one-sentence paragraphs.</li>
-          <li><strong>Limit sentence length</strong> Limit to not more than 25 words. Simplify. The simplest and clearest way of saying something is often the shortest and most eloquent.</li>
-          <li><strong>Follow Subject-Verb-Object format</strong> Good news writing starts with good sentence structure. Refrain from using a lot of commas.</li>
-          <li><strong>Limit prepositional phrases</strong> Use no more than three prepositional phrases per sentence.</li>
+          <li><strong>One idea per sentence:</strong> Strive for one-idea, one-sentence paragraphs to maximize clarity and pace.</li>
+          <li><strong>The 25-word preference:</strong> While the lead has a 30-word ceiling, sentences in the body should generally not exceed 25 words.</li>
+          <li><strong>Subject-Verb-Object (SVO):</strong> Use simple construction and refrain from excessive commas. <em>The active voice is a mandate.</em></li>
+          <li><strong>The Prepositional Limit:</strong> Use no more than three prepositional phrases per sentence to avoid clutter.</li>
         </ul>
       </div>
 
-      <!-- Tab 2 -->
-      <div id="tab-words" class="tab-content">
+      <div id="tab-para" class="tab-content">
         <ul class="pointer-list">
-          <li><strong>Use strong verbs and active voice</strong> Write most of your sentences like this: "somebody does something". Note also that when a sentence is recast into active voice, it becomes shorter.</li>
-          <li><strong>Reduce difficult words to simplest terms</strong> Use words understandable by the average reader. Explain technical terms briefly. Prefer concrete, specific words to abstract ones.</li>
-          <li><strong>Choose the precise word</strong></li>
-          <li><strong>Keep it simple</strong> Write to express not to impress.</li>
-          <li><strong>Be very careful</strong> Choose your words with care. Do not assume their meaning. Verify word meanings using high-quality references. Watch your grammar, spelling, capitalization, and punctuation.</li>
+          <li><strong>Length Ceiling:</strong> A paragraph should not exceed 75 words.</li>
+          <li><strong>Sentence Count:</strong> If expanded beyond one sentence, do not exceed three sentences per paragraph.</li>
+          <li><strong>The One-Sentence Standard:</strong> The one-paragraph sentence is preferred by editors for its "invisible architecture."</li>
+          <li><strong>The Synthesis Ban:</strong> Do not use direct quotation and summary in the same paragraph. Ensure the source's voice is distinct from yours.</li>
         </ul>
       </div>
 
-      <!-- Tab 3 -->
       <div id="tab-ethics" class="tab-content">
         <ul class="pointer-list">
-          <li><strong>Show, don't tell</strong> Don't just describe something. Reveal a piece of the world to yourself and to your readers.</li>
-          <li><strong>Give your source when necessary</strong> People and documents need to be cited in attribution because that helps the reader evaluate the reliability of information.</li>
-          <li><strong>Identify all persons</strong> Write their full names the first time they are mentioned.</li>
-          <li><strong>Keep it objective</strong> Stay completely impartial. Do not use "I" and "me" unless you are quoting someone.</li>
-          <li><strong>Quote people</strong></li>
-          <li><strong>Avoid preaching</strong> Do not preach at the end of the story.</li>
-        </ul>
-      </div>
-
-      <!-- Tab 4 -->
-      <div id="tab-focus" class="tab-content">
-        <ul class="pointer-list">
-          <li><strong>Have an angle</strong> It can help make the purpose of the story clear and give it focus.</li>
-          <li><strong>Read newspapers everyday</strong> Study constantly the construction of news stories in good national newspapers to improve your writing style and technique.</li>
+          <li><strong>Impartiality:</strong> Stay completely objective. Do not use "I" or "me" unless directly quoting a source.</li>
+          <li><strong>Avoid Preaching:</strong> Do not include a moralizing conclusion. Let the facts provide the message.</li>
+          <li><strong>Show, Don't Tell:</strong> Do not merely describe; reveal the world through concrete details and strong verbs showing "somebody doing something."</li>
         </ul>
       </div>
     </div>
 
-    <!-- SECTION 6: LIVE LAB 1 (ENGLISH) -->
-    <h2>6. Live Deconstruction Lab (English - Rappler)</h2>
+    <!-- SECTION 8: LAB 1 (ENGLISH) -->
+    <h2>8. Media Context Analysis (Rappler)</h2>
     <div class="lab-container">
       <div class="lab-header">
-        <div>
-          <span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: RAPPLER PHILIPPINES</span>
-          <span style="font-weight: 400; opacity: 0.7;">SEPT 17, 2026</span>
-        </div>
-        <a href="https://www.rappler.com/philippines/house-summons-meta-mark-zuckerberg-child-safety-dict-2027-budget/" target="_blank">
-          View Original Article ↗
-        </a>
+        <div><span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: RAPPLER PHILIPPINES</span></div>
+        <a href="https://www.rappler.com/philippines/house-summons-meta-mark-zuckerberg-child-safety-dict-2027-budget/" target="_blank">View Original ↗</a>
       </div>
-      
       <div class="lab-body" id="lab-body-1">
-        <!-- Left Column: Interactive Lab Pyramid -->
         <div class="lab-sidebar">
           <div class="pyramid-container" style="max-width: 100%;">
             <div class="p-layer p-top" onclick="analyzeLab('lead', 1)" style="height: 50px; font-size: 0.9rem;">The Lead</div>
@@ -765,37 +351,24 @@
             <div class="p-layer p-bot" onclick="analyzeLab('tail', 1)" style="height: 50px; font-size: 0.9rem;">The Tail</div>
           </div>
         </div>
-
-        <!-- Right Column: The Article -->
         <div class="article-text" id="article-text-1">
           <div class="struct-layer layer-lead" id="layer-lead-1">
             <p><span class="t-where">MANILA, Philippines</span> – <span class="t-who">The House of Representatives</span> on <span class="t-when">Wednesday, September 16</span>, <span class="t-what">summoned Meta Platforms CEO Mark Zuckerberg to respond to concerns over child safety on its platforms.</span></p>
+            <p><span class="t-who">The House</span> also <span class="t-what">deferred action on the proposed P19.49-billion budget of the Department of Information and Communications Technology (DICT) and its attached agencies for 2027</span> pending resolution of issues involving Meta and online safety.</p>
           </div>
-
           <div class="struct-layer layer-body" id="layer-body-1">
-            <p><span class="t-how">The House also deferred action on the proposed P19.49-billion budget of the Department of Information and Communications Technology (DICT) and its attached agencies for 2027</span> <span class="t-why">pending resolution of issues involving Meta and online safety.</span></p>
-
-            <p>The DICT, in a social media post on Wednesday evening, said <span class="t-why">the issues with Meta were related to the Online Sexual Abuse and Exploitation of Children (OSAEC) and Child Sexual Abuse and Exploitation Materials (CSAEM).</span> These were seen as “grave threats” demanding action and accountability.</p>
-            
-            <p>In addition to the OSAEC and CSAEM issues, <span class="t-why">further harms were also being facilitated or amplified on major platforms, including online illegal gambling, cyberbullying, social media addiction, depression, and related mental health risks that might endanger Filipinos, especially the young.</span></p>
-            
+            <p>The DICT, in a social media post on Wednesday evening, said <span class="t-why">the issues with Meta were related to the Online Sexual Abuse and Exploitation of Children (OSAEC) and Child Sexual Abuse and Exploitation Materials (CSAEM).</span></p>
             <p>The DICT added that <span class="t-why">Meta Platforms “continues to fall short of its responsibility and commitment to youth safety.”</span> <span class="t-how">The company’s scale and reach requires an obligation from them to set up proper safeguards, remove harmful content promptly, and cooperate with Philippine authorities.</span></p>
-            
-            <p>The DICT, in its statement, said it would continue taking Meta to task for any missteps it makes, adding that <span class="t-why">“accountability cannot be optional.”</span> “The safety and welfare of Filipino children must remain paramount. Technology companies that operate in the Philippines must be held to the highest standards of responsibility. Persistent failure to address these risks erodes public trust and cannot be tolerated,” it added.</p>
           </div>
-
           <div class="struct-layer layer-tail" id="layer-tail-1">
-            <p><span class="t-context">In a separate DICT post early on Thursday morning, the House of Representatives said it summoned Meta CEO Mark Zuckerberg to face the DICT to respond to its concerns surrounding harmful online content and platform accountability, alongside hopefully setting up measures to improve online safety for Philippine users.</span></p>
+            <p><span class="t-context">In a separate DICT post early on Thursday morning, the House of Representatives said it summoned Meta CEO Mark Zuckerberg to face the DICT to respond to its concerns surrounding harmful online content and platform accountability.</span></p>
           </div>
         </div>
       </div>
-
-      <!-- Dynamic Bottom Toolbar -->
       <div class="toolbar">
         <div id="lead-tools-1" class="tool-group">
           <button class="tool-btn" onclick="highlight('who', 'var(--indigo)', 1)"><div class="dot" style="background: var(--indigo);"></div> Isolate WHO</button>
           <button class="tool-btn" onclick="highlight('what', 'var(--rose)', 1)"><div class="dot" style="background: var(--rose);"></div> Isolate WHAT</button>
-          <button class="tool-btn" onclick="highlight('where', 'var(--emerald)', 1)"><div class="dot" style="background: var(--emerald);"></div> Isolate WHERE</button>
           <button class="tool-btn" onclick="highlight('when', 'var(--amber)', 1)"><div class="dot" style="background: var(--amber);"></div> Isolate WHEN</button>
         </div>
         <div id="body-tools-1" class="tool-group">
@@ -805,27 +378,22 @@
         <div id="tail-tools-1" class="tool-group">
           <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)', 1)"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
         </div>
-        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(1)">
-          <div class="dot" style="background: var(--text-muted);"></div> Reset Lab
-        </button>
+        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(1)"><div class="dot" style="background: var(--text-muted);"></div> Reset Lab</button>
+        <button class="tool-btn" style="margin-left: 10px;" onclick="toggleAnalysis(1)"><div class="dot" style="background: var(--indigo);"></div> Reveal Analysis</button>
+      </div>
+      <div class="analysis-box" id="analysis-1">
+        <strong>Instructor Analysis:</strong> The report utilizes a Summary Lead that packs the "Who" (House of Representatives), "When" (Wednesday), and "What" (summoned Mark Zuckerberg) into a single opening. The story demonstrates rigorous attribution by using the DICT as the primary source to validate concerns regarding child safety and budget deferment.
       </div>
     </div>
 
-    <!-- SECTION 7: LIVE LAB 2 (TAGALOG) -->
-    <h2>7. Live Deconstruction Lab (Filipino - GMA News)</h2>
+    <!-- SECTION 9: LAB 2 (TAGALOG) -->
+    <h2>9. Media Context Analysis (GMA News)</h2>
     <div class="lab-container">
       <div class="lab-header">
-        <div>
-          <span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: GMA NEWS</span>
-          <span style="font-weight: 400; opacity: 0.7;">SEPT 16, 2026</span>
-        </div>
-        <a href="https://www.gmanetwork.com/news/balitambayan/balita/1002605/ilang-nagpo-protesta-nagtipon-tipon-sa-labas-ng-icc-ikatlong-status-conference-sa-kaso-vs-ex-pre/story/" target="_blank">
-          View Original Article ↗
-        </a>
+        <div><span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: GMA NEWS</span></div>
+        <a href="https://www.gmanetwork.com/news/balitambayan/balita/1002605/ilang-nagpo-protesta-nagtipon-tipon-sa-labas-ng-icc-ikatlong-status-conference-sa-kaso-vs-ex-pre/story/" target="_blank">View Original ↗</a>
       </div>
-      
       <div class="lab-body" id="lab-body-2">
-        <!-- Left Column: Interactive Lab Pyramid -->
         <div class="lab-sidebar">
           <div class="pyramid-container" style="max-width: 100%;">
             <div class="p-layer p-top" onclick="analyzeLab('lead', 2)" style="height: 50px; font-size: 0.9rem;">The Lead</div>
@@ -833,36 +401,24 @@
             <div class="p-layer p-bot" onclick="analyzeLab('tail', 2)" style="height: 50px; font-size: 0.9rem;">The Tail</div>
           </div>
         </div>
-
-        <!-- Right Column: The Article -->
         <div class="article-text" id="article-text-2">
           <div class="struct-layer layer-lead" id="layer-lead-2">
             <p>Sa ikatlong status conference ng <span class="t-where">International Criminal Court (ICC) Trial Chamber</span> bago ang pagpapatuloy ng pagdinig sa kaso ni dating Pangulong Rodrigo Duterte, <span class="t-what">nagsagawa ng kilos-protesta</span> <span class="t-who">ang ilang grupo ng mga Pilipinong manggagawa at naninirahan sa Netherlands</span> <span class="t-when">nitong Miyerkoles</span> (oras sa Pilipinas).</p>
           </div>
-
           <div class="struct-layer layer-body" id="layer-body-2">
-            <p><span class="t-why">Panawagan nila sa mga Dutch at maging sa ICC, ituloy ang pagdetine kay Duterte.</span> Anila, naging inspirasyon sa buong mundo ang paglilitis sa dating pangulo na itinuring umano ang sarili bilang "untouchable".</p>
-            
-            <p>Ang ibang grupo naman, ginamit ang pagkakataon para <span class="t-why">ipanawagan ang pag-convict kay Vice President Sara Duterte</span>, na anak ni Rodrigo, na nililitis ng Senate impeachment court sa Pilipinas.</p>
-            
+            <p><span class="t-why">Panawagan nila sa mga Dutch at maging sa ICC, ituloy ang pagdetine kay Duterte.</span></p>
             <p>Inihayag naman ng mga tagasuporta ng dating pangulo, na iilan lang ang nakapunta sa tapat ng ICC ngayong araw ng status conference. <span class="t-how">Ayon sa isa sa kanila, wala silang nakaplanong aktibidad ngayong araw, pero nakapasok siya at ilan pang kasama sa loob ng ICC para panoorin ang pagdinig.</span></p>
-            
-            <p>Kalahating oras bago ang itinakdang oras ng pagsisimula ng ICC Trial Chamber para sa status conference, wala pa ring impormasyon kung haharap sa pagdinig ang nakatatandang Duterte.</p>
           </div>
-
           <div class="struct-layer layer-tail" id="layer-tail-2">
-            <p><span class="t-context">Hindi pa isinasapubliko ng ICC Registry ang anumang dokumento patungkol sa maaaring waiver ng depensa, gayundin ang oposisyon dito ng prosekusyon at abogado ng mga drug war victim. Pero nang idaos na ang pagdinig, nakitang dumalo si Duterte, at muling nasilayan ng publiko matapos ang mahigit isang taon matapos siyang madetine sa ICC.</span></p>
+            <p><span class="t-context">Hindi pa isinasapubliko ng ICC Registry ang anumang dokumento patungkol sa maaaring waiver ng depensa, gayundin ang oposisyon dito ng prosekusyon at abogado ng mga drug war victim. Pero nang idaos na ang pagdinig, nakitang dumalo si Duterte.</span></p>
           </div>
         </div>
       </div>
-
-      <!-- Dynamic Bottom Toolbar -->
       <div class="toolbar">
         <div id="lead-tools-2" class="tool-group">
           <button class="tool-btn" onclick="highlight('who', 'var(--indigo)', 2)"><div class="dot" style="background: var(--indigo);"></div> Isolate WHO</button>
           <button class="tool-btn" onclick="highlight('what', 'var(--rose)', 2)"><div class="dot" style="background: var(--rose);"></div> Isolate WHAT</button>
           <button class="tool-btn" onclick="highlight('where', 'var(--emerald)', 2)"><div class="dot" style="background: var(--emerald);"></div> Isolate WHERE</button>
-          <button class="tool-btn" onclick="highlight('when', 'var(--amber)', 2)"><div class="dot" style="background: var(--amber);"></div> Isolate WHEN</button>
         </div>
         <div id="body-tools-2" class="tool-group">
           <button class="tool-btn" style="border-color: rgba(6, 182, 212, 0.4);" onclick="highlight('how', 'var(--cyan)', 2)"><div class="dot" style="background: var(--cyan);"></div> Isolate HOW</button>
@@ -871,27 +427,22 @@
         <div id="tail-tools-2" class="tool-group">
           <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)', 2)"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
         </div>
-        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(2)">
-          <div class="dot" style="background: var(--text-muted);"></div> Reset Lab
-        </button>
+        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(2)"><div class="dot" style="background: var(--text-muted);"></div> Reset Lab</button>
+        <button class="tool-btn" style="margin-left: 10px;" onclick="toggleAnalysis(2)"><div class="dot" style="background: var(--indigo);"></div> Reveal Analysis</button>
+      </div>
+      <div class="analysis-box" id="analysis-2">
+        <strong>Instructor Analysis:</strong> This coverage employs a Sequence Lead. By detailing the protest actions in the Netherlands before the hearing began, the writer builds tension. This chronological framing leads the reader to the major "Hard News" reveal: the appearance of the former president in the courtroom.
       </div>
     </div>
 
-    <!-- SECTION 8: LIVE LAB 3 (ENGLISH - MANILA BULLETIN) -->
-    <h2>8. Live Deconstruction Lab (English - Manila Bulletin)</h2>
+    <!-- SECTION 10: LAB 3 (MANILA BULLETIN) -->
+    <h2>10. Media Context Analysis (Manila Bulletin)</h2>
     <div class="lab-container">
       <div class="lab-header">
-        <div>
-          <span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: MANILA BULLETIN</span>
-          <span style="font-weight: 400; opacity: 0.7;">SEPT 17, 2026</span>
-        </div>
-        <a href="https://mb.com.ph/2026/09/17/tumulo-ang-luha-padilla-emotional-over-seeing-duterte-in-icc-hearing" target="_blank">
-          View Original Article ↗
-        </a>
+        <div><span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: MANILA BULLETIN</span></div>
+        <a href="https://mb.com.ph/2026/09/17/tumulo-ang-luha-padilla-emotional-over-seeing-duterte-in-icc-hearing" target="_blank">View Original ↗</a>
       </div>
-      
       <div class="lab-body" id="lab-body-3">
-        <!-- Left Column: Interactive Lab Pyramid -->
         <div class="lab-sidebar">
           <div class="pyramid-container" style="max-width: 100%;">
             <div class="p-layer p-top" onclick="analyzeLab('lead', 3)" style="height: 50px; font-size: 0.9rem;">The Lead</div>
@@ -899,43 +450,25 @@
             <div class="p-layer p-bot" onclick="analyzeLab('tail', 3)" style="height: 50px; font-size: 0.9rem;">The Tail</div>
           </div>
         </div>
-
-        <!-- Right Column: The Article -->
         <div class="article-text" id="article-text-3">
           <div class="struct-layer layer-lead" id="layer-lead-3">
-            <p><span class="t-who">Senator Robin Padilla</span> on <span class="t-when">Thursday, Sept. 17</span>, <span class="t-what">said he was overcome with emotion upon seeing former President Rodrigo Duterte appear in person</span> <span class="t-where">before the International Criminal Court (ICC)</span>, but expressed sadness over the physical toll of his continued detention.</p>
+            <p><span class="t-who">Senator Robin Padilla</span> on <span class="t-when">Thursday, Sept. 17</span>, <span class="t-what">said he was overcome with emotion upon seeing former President Rodrigo Duterte appear in person</span> <span class="t-where">before the International Criminal Court (ICC)</span>.</p>
           </div>
-
           <div class="struct-layer layer-body" id="layer-body-3">
-            <p><span class="t-why">Padilla made the remarks a day after Duterte appeared at an ICC status hearing in The Hague, marking the former president’s first public appearance since his arrest in Manila and transfer to the tribunal’s custody in March 2025.</span></p>
-            
             <p><span class="t-why">Asked for his reaction to Duterte’s appearance and observations that he appeared well enough to face trial, Padilla said seeing the former president again initially brought him joy.</span></p>
-            
-            <p>“Ako po ay nabigla at hindi inaasahan na tumulo ang luha sa tuwa at nakita na siya (I was surprised and did not expect to shed tears of joy upon seeing him again),” Padilla said.</p>
-            
-            <p>However, he said his happiness was tempered by concern over Duterte’s condition after spending more than a year in detention.</p>
-            
-            <p>“Ngunit binalot ng lungkot dahil batid ko na malakas lang ang loob ni Tatay Digong. Kaya ng tapang at malasakit pero hindi na kaya ng 81-year-old niyang katawan ang kulungan (But it was also overshadowed by sadness because I know that Tatay Digong is only strong-willed. He has the courage and compassion, but his 81-year-old body can no longer endure imprisonment),” he added.</p>
-            
-            <p><span class="t-how">Duterte, 81, appeared at Wednesday’s hearing wearing a dark suit and white shirt and seated beside members of his defense team.</span></p>
-            
-            <p><span class="t-how">The status hearing focused on preparations for the presentation of the case, including discussions on prosecution witnesses and evidence and the amount of time the prosecution would need to present its case.</span></p>
+            <p>“Ako po ay nabigla at hindi inaasahan na tumulo ang luha sa tuwa at nakita na siya,” Padilla said.</p>
+            <p>However, he said his happiness was tempered by concern over Duterte’s condition. “Ngunit binalot ng lungkot dahil batid ko na malakas lang ang loob ni Tatay Digong... hindi na kaya ng 81-year-old niyang katawan ang kulungan,” he added.</p>
+            <p><span class="t-how">The status hearing focused on preparations for the presentation of the case, including discussions on prosecution witnesses and evidence.</span></p>
           </div>
-
           <div class="struct-layer layer-tail" id="layer-tail-3">
-            <p><span class="t-context">Duterte faces charges before the ICC over alleged crimes against humanity linked to his administration’s anti-drug campaign.</span></p>
-            <p><span class="t-context">The former president has denied the allegations and previously maintained that the ICC has no jurisdiction over him.</span></p>
+            <p><span class="t-context">Duterte faces charges before the ICC over alleged crimes against humanity linked to his administration’s anti-drug campaign. The former president has denied the allegations.</span></p>
           </div>
         </div>
       </div>
-
-      <!-- Dynamic Bottom Toolbar -->
       <div class="toolbar">
         <div id="lead-tools-3" class="tool-group">
           <button class="tool-btn" onclick="highlight('who', 'var(--indigo)', 3)"><div class="dot" style="background: var(--indigo);"></div> Isolate WHO</button>
           <button class="tool-btn" onclick="highlight('what', 'var(--rose)', 3)"><div class="dot" style="background: var(--rose);"></div> Isolate WHAT</button>
-          <button class="tool-btn" onclick="highlight('where', 'var(--emerald)', 3)"><div class="dot" style="background: var(--emerald);"></div> Isolate WHERE</button>
-          <button class="tool-btn" onclick="highlight('when', 'var(--amber)', 3)"><div class="dot" style="background: var(--amber);"></div> Isolate WHEN</button>
         </div>
         <div id="body-tools-3" class="tool-group">
           <button class="tool-btn" style="border-color: rgba(6, 182, 212, 0.4);" onclick="highlight('how', 'var(--cyan)', 3)"><div class="dot" style="background: var(--cyan);"></div> Isolate HOW</button>
@@ -944,27 +477,23 @@
         <div id="tail-tools-3" class="tool-group">
           <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)', 3)"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
         </div>
-        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(3)">
-          <div class="dot" style="background: var(--text-muted);"></div> Reset Lab
-        </button>
+        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab(3)"><div class="dot" style="background: var(--text-muted);"></div> Reset Lab</button>
+        <button class="tool-btn" style="margin-left: 10px;" onclick="toggleAnalysis(3)"><div class="dot" style="background: var(--indigo);"></div> Reveal Analysis</button>
+      </div>
+      <div class="analysis-box" id="analysis-3">
+        <strong>Instructor Analysis:</strong> This piece illustrates the integration of "Soft News" (the Senator’s emotional response and "tears of joy") into a "Hard News" context (the ICC hearing). The writer balances the legal proceedings with the human interest of the physical toll of detention on an 81-year-old, providing a more compelling "Angle" for the reader.
       </div>
     </div>
 
   </div>
 
   <script>
-    // Tab Logic for Pointers
+    // Tab Logic
     function openTab(evt, tabName) {
       const tabContents = document.getElementsByClassName("tab-content");
-      for (let i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove("active");
-      }
-
+      for (let i = 0; i < tabContents.length; i++) tabContents[i].classList.remove("active");
       const tabBtns = document.getElementsByClassName("tab-btn");
-      for (let i = 0; i < tabBtns.length; i++) {
-        tabBtns[i].classList.remove("active");
-      }
-
+      for (let i = 0; i < tabBtns.length; i++) tabBtns[i].classList.remove("active");
       document.getElementById(tabName).classList.add("active");
       evt.currentTarget.classList.add("active");
     }
@@ -977,130 +506,86 @@
 
       const display = document.getElementById('lead-display');
       
-      if (type === 'summary') {
-        display.innerHTML = `
-          <strong style="color: var(--indigo); font-family: 'Space Grotesk'; font-size: 1.3rem;">Summary Lead</strong><br>
-          The classic approach. Tells the reader what the story is about instantly without destroying the flow of the sentence. Remember: use short, simple declarative sentences and do not cram everything into one sentence. Never use an important/unusual word twice.
-          <div class="lead-example" style="border-left: 3px solid var(--indigo);">
-            "The city council unanimously approved a ₱500-million infrastructure budget Tuesday morning to rehabilitate the downtown drainage system before the rainy season begins."
-          </div>
-        `;
-      } else if (type === 'cartridge') {
-        display.innerHTML = `
-          <strong style="color: var(--rose); font-family: 'Space Grotesk'; font-size: 1.3rem;">Cartridge Lead</strong><br>
-          Short, abrupt, and definite. It tells the gist of the news with the use of the fewest words possible.
-          <div class="lead-example" style="border-left: 3px solid var(--rose);">
-            "The Mayor has officially resigned."
-          </div>
-        `;
-      } else if (type === 'punch') {
-        display.innerHTML = `
-          <strong style="color: var(--amber); font-family: 'Space Grotesk'; font-size: 1.3rem;">Punch Lead</strong><br>
-          Somewhat similar to the cartridge lead, but designed specifically to surprise and intrigue the reader right at the start.
-          <div class="lead-example" style="border-left: 3px solid var(--amber);">
-            "The undisputed champion has finally fallen."
-          </div>
-        `;
-      } else if (type === 'contrast') {
-        display.innerHTML = `
-          <strong style="color: var(--cyan); font-family: 'Space Grotesk'; font-size: 1.3rem;">Contrast Lead</strong><br>
-          Emphasizes a sharp juxtaposition to capture the audience's attention.
-          <div class="lead-example" style="border-left: 3px solid var(--cyan);">
-            "Ten years ago, he was sweeping the city streets. Today, he was sworn in as the city's newest mayor."
-          </div>
-        `;
-      } else if (type === 'staccato') {
-        display.innerHTML = `
-          <strong style="color: var(--emerald); font-family: 'Space Grotesk'; font-size: 1.3rem;">Staccato Lead</strong><br>
-          Emphasizes the time element, and usually consists of a series of phrases, punctuated by commas or dashes.
-          <div class="lead-example" style="border-left: 3px solid var(--emerald);">
-            "Midnight. A loud crash. Absolute silence. That was the sequence of events residents reported before the warehouse fire broke out."
-          </div>
-        `;
-      }
+      const leads = {
+        'summary': { title: 'Summary (5Ws and 1H)', color: 'var(--indigo)', desc: 'Summarizes the facts in one sentence. Use for breaking news where speed and factual density are paramount.', ex: '"The city council unanimously approved a ₱500-million infrastructure budget Tuesday morning..."' },
+        'astonisher': { title: 'Astonisher', color: 'var(--rose)', desc: 'Uses an exclamation or shocking statement to demand immediate attention.', ex: '"Absolute devastation!"' },
+        'contrast': { title: 'Contrast Lead', color: 'var(--amber)', desc: 'Highlights a striking difference.', ex: '"Clutching her baby girl, Mrs. Arquiza could not control her tears amid the ruined buildings..."' },
+        'epigram': { title: 'Epigram', color: 'var(--emerald)', desc: 'Opens with a verse or quotation to set the story’s moral tone.', ex: '"Time heals all wounds, but for the residents of Barangay San Jose, time stopped yesterday."' },
+        'picture': { title: 'Picture', color: 'var(--cyan)', desc: 'Employs descriptive language to create a mental image of the subject.', ex: '"Thick black smoke billowed over the skyline as sirens wailed into the night..."' },
+        'background': { title: 'Background', color: 'var(--fuchsia)', desc: 'Describes the setting of the event to create atmosphere.', ex: '"The grand hall of the Manila Hotel was completely silent as the verdict was read."' },
+        'parody': { title: 'Parody', color: 'var(--indigo)', desc: 'Mimics a well-known song, poem, or phrase for instant familiarity.', ex: '"To build or not to build, that is the question the city council debated today."' },
+        'punch': { title: 'Punch Lead', color: 'var(--rose)', desc: 'A short, forceful, and explosive sentence.', ex: '"God\'s not dead!"' },
+        'quotation': { title: 'Quotation', color: 'var(--amber)', desc: 'Starts with a direct quote when the source\'s exact words are more powerful than a summary.', ex: '"I will never surrender," the mayor declared moments before his arrest.' },
+        'question': { title: 'Question', color: 'var(--emerald)', desc: 'Asks a query to induce the reader to continue to find the answer.', ex: '"Who is truly responsible for the city\'s water crisis?"' },
+        'cartridge': { title: 'Cartridge Lead', color: 'var(--cyan)', desc: 'Short, abrupt, and definite; tells the gist in the fewest words possible.', ex: '"The President has officially resigned."' },
+        'freak': { title: 'Freak Lead', color: 'var(--fuchsia)', desc: 'Throws caution to the air by being intentionally different to pique intense curiosity.', ex: '"For sale: a baby."' },
+        'sequence': { title: 'Sequence Lead', color: 'var(--indigo)', desc: 'Arranges facts chronologically for a single effect, building toward a revelation.', ex: '"A missed phone call, a delayed train, and a lost ticket resulted in the biggest political scandal of the year."' },
+        'suspended': { title: 'Suspended Interest', color: 'var(--rose)', desc: 'Leads the reader to the end of the paragraph before giving them the news peg.', ex: '"He walked into the room, took off his hat, sat down at the table, and confessed to the crime."' },
+        'staccato': { title: 'Staccato Lead', color: 'var(--amber)', desc: 'A series of phrases punctuated by commas or dashes to emphasize the time element.', ex: '"Midnight. A loud crash. Absolute silence."' },
+        'figurative': { title: 'Figurative Lead', color: 'var(--emerald)', desc: 'Uses metaphors or figures of speech (use with caution).', ex: '"The city council is navigating a political minefield this week."' }
+      };
+
+      const data = leads[type];
+      display.innerHTML = `
+        <strong style="color: ${data.color}; font-family: 'Space Grotesk'; font-size: 1.3rem;">${data.title}</strong><br>
+        ${data.desc}
+        <div class="lead-example" style="border-left: 3px solid ${data.color};">
+          ${data.ex}
+        </div>
+      `;
     }
 
-    // Standalone Pyramid Logic
+    // Pyramid Logic
     function showStandalonePyramid(layer) {
       const text = document.getElementById('pyramid-text-standalone');
       if (layer === 'lead') {
-        text.innerHTML = `<strong style="color: #bfa3ff; font-weight: 600;">"The Lead": The most important info.</strong><br>Who? What? Where? When? Why? How?<br>Approximately 30 words (1-2 thin paragraphs). May include a "hook" (provocative quote or question).`;
+        text.innerHTML = `<strong style="color: #bfa3ff; font-weight: 600;">"Primary & Secondary Lead"</strong><br>Summarizing the 5Ws and 1H in 30 words or less. The secondary lead gives "flesh" to the story and acts as a bridge.`;
       } else if (layer === 'body') {
-        text.innerHTML = `<strong style="color: #ff99cc; font-weight: 600;">"The Body": The crucial info.</strong><br>Argument, Controversy, Story, Issue.<br>Evidence, background, details, logic, etc. Quotes, photos, video, and audio that support, dispute, expand the topic.`;
+        text.innerHTML = `<strong style="color: #ff99cc; font-weight: 600;">"Details or Particulars"</strong><br>All available facts are included here, specifically answering the "Why" and "How" in greater depth. Sentences should not exceed 25 words.`;
       } else {
-        text.innerHTML = `<strong style="color: var(--emerald); font-weight: 600;">"The Tail": extra info.</strong><br>Interesting/Related items. May include extra context.<br>In blogs, columns, and other editorials: the assessment of the journalist.`;
+        text.innerHTML = `<strong style="color: var(--emerald); font-weight: 600;">"Background"</strong><br>Relevant past events. Placed last so editors may "strike it out" if space is limited without impairing the story’s substance.`;
       }
     }
 
-    // Live Lab Logic (Handles multiple labs)
+    // Toggle Analysis
+    function toggleAnalysis(labId) {
+      const box = document.getElementById('analysis-' + labId);
+      if(box.style.display === 'block') { box.style.display = 'none'; } 
+      else { box.style.display = 'block'; }
+    }
+
+    // Lab Highlighting Logic
     function analyzeLab(layer, labId) {
       const layers = document.querySelectorAll(`#lab-body-${labId} .struct-layer`);
-      const leadTools = document.getElementById(`lead-tools-${labId}`);
-      const bodyTools = document.getElementById(`body-tools-${labId}`);
-      const tailTools = document.getElementById(`tail-tools-${labId}`);
-      
-      leadTools.style.display = 'none';
-      bodyTools.style.display = 'none';
-      tailTools.style.display = 'none';
+      document.getElementById(`lead-tools-${labId}`).style.display = 'none';
+      document.getElementById(`body-tools-${labId}`).style.display = 'none';
+      document.getElementById(`tail-tools-${labId}`).style.display = 'none';
       highlight('clear', null, labId);
       
-      layers.forEach(el => {
-        el.style.opacity = '0.25';
-        el.style.paddingLeft = '0px';
-        el.style.borderLeftColor = 'transparent';
-      });
-
+      layers.forEach(el => { el.style.opacity = '0.25'; el.style.paddingLeft = '0px'; el.style.borderLeftColor = 'transparent'; });
       const targetLayer = document.getElementById(`layer-${layer}-${labId}`);
-      if (targetLayer) {
-        targetLayer.style.opacity = '1';
-        targetLayer.style.paddingLeft = '20px';
-      }
-
-      if (layer === 'lead') {
-        leadTools.style.display = 'flex';
-        targetLayer.style.borderLeftColor = 'var(--indigo)';
-      } else if (layer === 'body') {
-        bodyTools.style.display = 'flex';
-        targetLayer.style.borderLeftColor = 'var(--rose)';
-      } else if (layer === 'tail') {
-        tailTools.style.display = 'flex';
-        targetLayer.style.borderLeftColor = 'var(--emerald)';
-      }
+      if (targetLayer) { targetLayer.style.opacity = '1'; targetLayer.style.paddingLeft = '20px'; }
+      if (layer === 'lead') { document.getElementById(`lead-tools-${labId}`).style.display = 'flex'; targetLayer.style.borderLeftColor = 'var(--indigo)'; }
+      else if (layer === 'body') { document.getElementById(`body-tools-${labId}`).style.display = 'flex'; targetLayer.style.borderLeftColor = 'var(--rose)'; }
+      else if (layer === 'tail') { document.getElementById(`tail-tools-${labId}`).style.display = 'flex'; targetLayer.style.borderLeftColor = 'var(--emerald)'; }
     }
 
     function highlight(target, color, labId) {
       const allSpans = document.querySelectorAll(`#article-text-${labId} span`);
-      allSpans.forEach(span => {
-        span.style.backgroundColor = 'transparent';
-        span.style.color = 'inherit';
-        span.style.padding = '0';
-      });
-
+      allSpans.forEach(span => { span.style.backgroundColor = 'transparent'; span.style.color = 'inherit'; span.style.padding = '0'; });
       if (target === 'clear') return;
-
       const targetSpans = document.querySelectorAll(`#article-text-${labId} .t-${target}`);
-      targetSpans.forEach(span => {
-        span.style.backgroundColor = color;
-        span.style.color = (target === 'where' || target === 'when' || target === 'how' || target === 'context') ? '#000' : '#fff';
-        span.style.padding = '2px 6px';
-      });
+      targetSpans.forEach(span => { span.style.backgroundColor = color; span.style.color = (target === 'where' || target === 'when' || target === 'how' || target === 'context') ? '#000' : '#fff'; span.style.padding = '2px 6px'; });
     }
 
     function resetLab(labId) {
-      const layers = document.querySelectorAll(`#lab-body-${labId} .struct-layer`);
-      layers.forEach(el => {
-        el.style.opacity = '1';
-        el.style.paddingLeft = '0px';
-        el.style.borderLeftColor = 'transparent';
-      });
-      
+      document.querySelectorAll(`#lab-body-${labId} .struct-layer`).forEach(el => { el.style.opacity = '1'; el.style.paddingLeft = '0px'; el.style.borderLeftColor = 'transparent'; });
       document.getElementById(`lead-tools-${labId}`).style.display = 'none';
       document.getElementById(`body-tools-${labId}`).style.display = 'none';
       document.getElementById(`tail-tools-${labId}`).style.display = 'none';
-      
+      document.getElementById('analysis-' + labId).style.display = 'none';
       highlight('clear', null, labId);
     }
   </script>
-
 </body>
 </html>
