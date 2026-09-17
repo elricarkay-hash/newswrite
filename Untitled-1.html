@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journalism Masterclass: Interactive Tools</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap');
+
+    :root {
+      --indigo: #6F00FF;
+      --rose: #FF007F;
+      --emerald: #50C878;
+      --amber: #F59E0B;
+      --cyan: #06B6D4;
+      --fuchsia: #D946EF;
+      --bg-dark: #0A0A0C;
+      --surface: #121217;
+      --surface-hover: #1A1A24;
+      --border: rgba(255, 255, 255, 0.08);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    /* =========================================
+       GLOBAL TYPOGRAPHY & LAYOUT
+       ========================================= */
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      margin: 0;
+      padding: 60px 20px;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(111, 0, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 100% 50%, rgba(255, 0, 127, 0.05) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    .canvas {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, #fff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--indigo);
+      margin-bottom: 60px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      margin: 60px 0 25px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 15px;
+    }
+
+    h2::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+    }
+
+    /* =========================================
+       NEWS GATHERING PILLS
+       ========================================= */
+    .pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 50px;
+      justify-content: center;
+    }
+
+    .pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pill:hover {
+      background: rgba(111, 0, 255, 0.15);
+      color: #fff;
+      border-color: var(--indigo);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================
+       CARDS & GRIDS
+       ========================================= */
+    .flip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      height: 220px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+      background: var(--surface);
+    }
+
+    .flip-card-front {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .flip-card-front.acc { color: var(--indigo); border-top: 4px solid var(--indigo); }
+    .flip-card-front.brev { color: var(--rose); border-top: 4px solid var(--rose); }
+    .flip-card-front.clar { color: var(--emerald); border-top: 4px solid var(--emerald); }
+
+    .flip-card-back {
+      background: var(--surface-hover);
+      transform: rotateY(180deg);
+      font-size: 1.05rem;
+      color: var(--text-main);
+      flex-direction: column;
+      text-align: center;
+    }
+
+    /* Guidelines Grid */
+    .guideline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      border-left: 4px solid var(--rose);
+      color: var(--text-main);
+      font-size: 1.05rem;
+      transition: transform 0.2s;
+    }
+
+    .guide-card:hover {
+      transform: translateX(5px);
+      background: var(--surface-hover);
+    }
+
+    /* Interactive Hover Cards */
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 50px;
+    }
+
+    .hover-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hover-card p {
+      max-height: 0;
+      opacity: 0;
+      margin: 0;
+      transition: all 0.4s ease;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .hover-card:hover p {
+      max-height: 100px;
+      opacity: 1;
+      margin-top: 15px;
+    }
+
+    .hover-card:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px);
+    }
+
+    /* =========================================
+       LEAD DISPLAY
+       ========================================= */
+    .lead-buttons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .lead-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .lead-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .lead-btn.active {
+      background: rgba(111, 0, 255, 0.15);
+      color: var(--indigo);
+      border-color: var(--indigo);
+    }
+
+    .lead-display-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      min-height: 120px;
+      font-size: 1.15rem;
+      color: var(--text-main);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .lead-example {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      font-style: italic;
+      color: #E2E8F0;
+    }
+
+    /* =========================================
+       INTERACTIVE TABS (POINTERS)
+       ========================================= */
+    .tab-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 50px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 16px 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .tab-btn.active {
+      color: var(--emerald);
+      border-bottom: 3px solid var(--emerald);
+      background: rgba(80, 200, 120, 0.05);
+    }
+
+    .tab-content {
+      display: none;
+      padding: 32px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .pointer-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .pointer-list li {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed var(--border);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .pointer-list li:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .pointer-list strong {
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+    }
+
+    /* =========================================
+       INVERTED PYRAMID
+       ========================================= */
+    .pyramid-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      width: 100%;
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    .p-layer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+      height: 65px;
+      color: #fff;
+      width: 100%;
+    }
+
+    .p-layer:hover {
+      filter: brightness(1.15);
+      transform: scale(1.02);
+    }
+
+    .p-top {
+      background: var(--indigo);
+      clip-path: polygon(0% 0%, 100% 0%, 83.3% 100%, 16.7% 100%);
+    }
+
+    .p-mid {
+      background: var(--rose);
+      clip-path: polygon(16.7% 0%, 83.3% 0%, 66.6% 100%, 33.4% 100%);
+    }
+
+    .p-bot {
+      background: var(--emerald);
+      clip-path: polygon(33.4% 0%, 66.6% 0%, 50% 100%, 50% 100%);
+      color: #000;
+    }
+
+    .pyramid-text {
+      margin-top: 24px;
+      font-size: 1.05rem;
+      padding: 24px;
+      border-radius: 12px;
+      background: transparent;
+      border: 1px dashed var(--border);
+      min-height: 100px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    /* =========================================
+       DECONSTRUCTION LAB
+       ========================================= */
+    .lab-container {
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 60px;
+    }
+
+    .lab-header {
+      background: #181820;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .lab-header a {
+      color: var(--cyan);
+      text-decoration: none;
+      background: rgba(6, 182, 212, 0.1);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+    }
+    
+    .lab-header a:hover {
+      background: rgba(6, 182, 212, 0.2);
+    }
+
+    .lab-body {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 32px;
+      padding: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .lab-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lab-sidebar .pyramid-text {
+      font-size: 0.95rem;
+      padding: 16px;
+      background: #181820;
+      border: 1px solid var(--border);
+      min-height: 120px;
+    }
+
+    .article-text {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: #E2E8F0;
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 16px;
+    }
+
+    .article-text::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .article-text::-webkit-scrollbar-track {
+      background: #181820;
+    }
+
+    .article-text::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 4px;
+    }
+
+    .struct-layer {
+      transition: opacity 0.3s ease, border-left-color 0.3s ease, padding-left 0.3s ease;
+      border-left: 4px solid transparent;
+      margin-bottom: 24px;
+    }
+
+    .struct-layer p {
+      margin: 0 0 16px 0;
+    }
+
+    .article-text span {
+      transition: background-color 0.3s ease, color 0.3s ease;
+      border-radius: 4px;
+    }
+
+    /* =========================================
+       LAB TOOLBAR
+       ========================================= */
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      padding: 24px 32px;
+      background: #181820;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tool-group {
+      display: none;
+      gap: 12px;
+      animation: fadeIn 0.3s ease forwards;
+      flex-wrap: wrap;
+    }
+
+    .tool-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tool-btn:hover {
+      background: var(--surface-hover);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="canvas">
+    <h1>Interactive Journalism Modules</h1>
+    <div class="subtitle">Live Masterclass Dashboard</div>
+
+    <!-- SECTION 1: NEWS GATHERING -->
+    <h2>1. Tips in News Gathering</h2>
+    <div class="pill-grid">
+      <div class="pill">See for your self</div>
+      <div class="pill">Find the person who knows</div>
+      <div class="pill">Compare all versions</div>
+      <div class="pill">Get both sides</div>
+      <div class="pill">Do not give up too easily</div>
+      <div class="pill">Be tactful and courteous</div>
+      <div class="pill">Make and keep friends</div>
+      <div class="pill">Get into print</div>
+      <div class="pill">Research</div>
+      <div class="pill">Observe proper attribution</div>
+    </div>
+
+    <!-- SECTION 2: THE ABCS -->
+    <h2>2. The ABCs of News Writing</h2>
+    <div class="flip-grid">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front acc">Accuracy</div>
+          <div class="flip-card-back">
+            <strong style="color: var(--indigo); font-size: 1.2rem; margin-bottom: 10px;">The First Rule</strong>
+            A story can be creative and compelling, but if it contains errors, it is worthless. Always check numbers, spelling of names, and basic facts. Accuracy always comes first.
+          </div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front brev">Brevity</div>
+          <div class="flip-card-back">
+            <strong style="color: var(--rose); font-size: 1.2rem; margin-bottom: 10px;">Get to the point</strong>
+            Each word should do a job. If not, take it out. Don't be redundant. Say "8 a.m." — not "8 a.m. in the morning." 
+          </div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front clar">Clarity</div>
+          <div class="flip-card-back">
+            <strong style="color: var(--emerald); font-size: 1.2rem; margin-bottom: 10px;">Leave no questions</strong>
+            Clarity starts with competent reporting. Understand your subject so completely that your story leaves it crystal-clear. Explain anything that wouldn't be obvious.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: INVERTED PYRAMID -->
+    <h2 style="margin-top: 60px;">3. The Inverted Pyramid Style</h2>
+    <div style="margin-bottom: 60px;">
+      <div class="pyramid-container">
+        <div class="p-layer p-top" onclick="showStandalonePyramid('lead')">The Lead</div>
+        <div class="p-layer p-mid" onclick="showStandalonePyramid('body')">The Body</div>
+        <div class="p-layer p-bot" onclick="showStandalonePyramid('tail')">The Tail</div>
+      </div>
+      <div id="pyramid-text-standalone" class="pyramid-text">
+        The Inverted Pyramid of news suggests that news be told in order of most interesting or important to least interesting or important. Click a layer to explore the structure.
+      </div>
+    </div>
+
+    <!-- SECTION 4: WRITING THE LEAD & TYPES -->
+    <h2>4. Writing The Lead & Variations</h2>
+    
+    <div style="background: rgba(111, 0, 255, 0.05); border-left: 4px solid var(--indigo); padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 30px;">
+      <h3 style="color: var(--indigo); margin-bottom: 8px;">The Angle</h3>
+      <p style="margin: 0; font-size: 1.1rem; color: var(--text-main);">The main idea of a news story and lead is called the "angle". It is the main point that the rest of the story will try to support.</p>
+    </div>
+
+    <h3 style="font-family: 'Space Grotesk'; margin-bottom: 20px; color: var(--text-muted);">Guidelines in Writing the Lead:</h3>
+    <div class="guideline-grid">
+      <div class="guide-card">Pack the most important info in one sentence.</div>
+      <div class="guide-card">Start with the most important or unusual idea of the news event.</div>
+      <div class="guide-card">Go direct to the point.</div>
+      <div class="guide-card">Rarely use the "when" and "where" leads.</div>
+      <div class="guide-card">Use less than 30 words.</div>
+      <div class="guide-card">Avoid starting with articles: a, an, the.</div>
+      <div class="guide-card">Do not mention names in the lead unless the person is well-known.</div>
+    </div>
+
+    <!-- Lead Types (Interactive) -->
+    <h3 style="font-family: 'Space Grotesk'; margin-bottom: 20px; color: var(--text-muted);">Types of Leads:</h3>
+    <div class="lead-buttons">
+      <button class="lead-btn active" id="btn-summary" onclick="showLead('summary')">Summary Lead</button>
+      <button class="lead-btn" id="btn-cartridge" onclick="showLead('cartridge')">Cartridge Lead</button>
+      <button class="lead-btn" id="btn-punch" onclick="showLead('punch')">Punch Lead</button>
+      <button class="lead-btn" id="btn-contrast" onclick="showLead('contrast')">Contrast Lead</button>
+      <button class="lead-btn" id="btn-staccato" onclick="showLead('staccato')">Staccato Lead</button>
+    </div>
+
+    <div class="lead-display-box" id="lead-display">
+      <strong style="color: var(--indigo); font-family: 'Space Grotesk'; font-size: 1.3rem;">Summary Lead</strong><br>
+      The classic approach. Tells the reader what the story is about instantly without destroying the flow of the sentence. Remember: use short, simple declarative sentences and do not cram everything into one sentence. Never use an important/unusual word twice.
+      <div class="lead-example" style="border-left: 3px solid var(--indigo);">
+        "The city council unanimously approved a ₱500-million infrastructure budget Tuesday morning to rehabilitate the downtown drainage system before the rainy season begins."
+      </div>
+    </div>
+
+    <!-- SECTION 5: POINTERS TABS -->
+    <h2>5. The Pointers in Newswriting</h2>
+    <div class="tab-container">
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="openTab(event, 'tab-syntax')">Syntax & Structure</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-words')">Word Choice & Verbs</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-ethics')">Objectivity & Sourcing</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-focus')">Focus & Strategy</button>
+      </div>
+
+      <!-- Tab 1 -->
+      <div id="tab-syntax" class="tab-content active">
+        <ul class="pointer-list">
+          <li><strong>One idea per sentence</strong> As much as possible, write one-idea, one-sentence paragraphs.</li>
+          <li><strong>Limit sentence length</strong> Limit to not more than 25 words. Simplify. The simplest and clearest way of saying something is often the shortest and most eloquent.</li>
+          <li><strong>Follow Subject-Verb-Object format</strong> Good news writing starts with good sentence structure. Refrain from using a lot of commas.</li>
+          <li><strong>Limit prepositional phrases</strong> Use no more than three prepositional phrases per sentence.</li>
+        </ul>
+      </div>
+
+      <!-- Tab 2 -->
+      <div id="tab-words" class="tab-content">
+        <ul class="pointer-list">
+          <li><strong>Use strong verbs and active voice</strong> Write most of your sentences like this: "somebody does something". Note also that when a sentence is recast into active voice, it becomes shorter.</li>
+          <li><strong>Reduce difficult words to simplest terms</strong> Use words understandable by the average reader. Explain technical terms briefly. Prefer concrete, specific words to abstract ones.</li>
+          <li><strong>Choose the precise word</strong></li>
+          <li><strong>Keep it simple</strong> Write to express not to impress.</li>
+          <li><strong>Be very careful</strong> Choose your words with care. Do not assume their meaning. Verify word meanings using high-quality references. Watch your grammar, spelling, capitalization, and punctuation.</li>
+        </ul>
+      </div>
+
+      <!-- Tab 3 -->
+      <div id="tab-ethics" class="tab-content">
+        <ul class="pointer-list">
+          <li><strong>Show, don't tell</strong> Don't just describe something. Reveal a piece of the world to yourself and to your readers.</li>
+          <li><strong>Give your source when necessary</strong> People and documents need to be cited in attribution because that helps the reader evaluate the reliability of information.</li>
+          <li><strong>Identify all persons</strong> Write their full names the first time they are mentioned.</li>
+          <li><strong>Keep it objective</strong> Stay completely impartial. Do not use "I" and "me" unless you are quoting someone.</li>
+          <li><strong>Quote people</strong></li>
+          <li><strong>Avoid preaching</strong> Do not preach at the end of the story.</li>
+        </ul>
+      </div>
+
+      <!-- Tab 4 -->
+      <div id="tab-focus" class="tab-content">
+        <ul class="pointer-list">
+          <li><strong>Have an angle</strong> It can help make the purpose of the story clear and give it focus.</li>
+          <li><strong>Read newspapers everyday</strong> Study constantly the construction of news stories in good national newspapers to improve your writing style and technique.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SECTION 6: LIVE LAB -->
+    <h2>6. Live Deconstruction Lab</h2>
+    <div class="lab-container">
+      <div class="lab-header">
+        <div>
+          <span style="letter-spacing: 1px; margin-right: 15px;">SOURCE: RAPPLER PHILIPPINES</span>
+          <span style="font-weight: 400; opacity: 0.7;">SEPT 17, 2026</span>
+        </div>
+        <a href="https://www.rappler.com/philippines/house-summons-meta-mark-zuckerberg-child-safety-dict-2027-budget/" target="_blank">
+          View Original Article ↗
+        </a>
+      </div>
+      
+      <div class="lab-body">
+        <!-- Left Column: Interactive Lab Pyramid -->
+        <div class="lab-sidebar">
+          <div class="pyramid-container" style="max-width: 100%;">
+            <div class="p-layer p-top" onclick="analyzeLab('lead')" style="height: 50px; font-size: 0.9rem;">The Lead</div>
+            <div class="p-layer p-mid" onclick="analyzeLab('body')" style="height: 50px; font-size: 0.9rem;">The Body</div>
+            <div class="p-layer p-bot" onclick="analyzeLab('tail')" style="height: 50px; font-size: 0.9rem;">The Tail</div>
+          </div>
+          <div id="pyramid-text-lab" class="pyramid-text">
+            Click the pyramid layers above to isolate and define the corresponding structural block in the text.
+          </div>
+        </div>
+
+        <!-- Right Column: The Article -->
+        <div class="article-text" id="article-text">
+          <div class="struct-layer layer-lead" id="layer-lead">
+            <p><span class="t-where">MANILA, Philippines</span> – <span class="t-who">The House of Representatives</span> on <span class="t-when">Wednesday, September 16</span>, <span class="t-what">summoned Meta Platforms CEO Mark Zuckerberg to respond to concerns over child safety on its platforms.</span></p>
+            <p><span class="t-who">The House</span> also <span class="t-what">deferred action on the proposed P19.49-billion budget of the Department of Information and Communications Technology (DICT) and its attached agencies for 2027</span> pending resolution of issues involving Meta and online safety.</p>
+          </div>
+
+          <div class="struct-layer layer-body" id="layer-body">
+            <p>The DICT, in a social media post on Wednesday evening, said <span class="t-why">the issues with Meta were related to the Online Sexual Abuse and Exploitation of Children (OSAEC) and Child Sexual Abuse and Exploitation Materials (CSAEM).</span> These were seen as “grave threats” demanding action and accountability.</p>
+            
+            <p>In addition to the OSAEC and CSAEM issues, <span class="t-why">further harms were also being facilitated or amplified on major platforms, including online illegal gambling, cyberbullying, social media addiction, depression, and related mental health risks that might endanger Filipinos, especially the young.</span></p>
+            
+            <p>The DICT added that <span class="t-why">Meta Platforms “continues to fall short of its responsibility and commitment to youth safety.”</span> <span class="t-how">The company’s scale and reach requires an obligation from them to set up proper safeguards, remove harmful content promptly, and cooperate with Philippine authorities.</span></p>
+            
+            <p>The DICT, in its statement, said it would continue taking Meta to task for any missteps it makes, adding that <span class="t-why">“accountability cannot be optional.”</span> “The safety and welfare of Filipino children must remain paramount. Technology companies that operate in the Philippines must be held to the highest standards of responsibility. Persistent failure to address these risks erodes public trust and cannot be tolerated,” it added.</p>
+          </div>
+
+          <div class="struct-layer layer-tail" id="layer-tail">
+            <p><span class="t-context">In a separate DICT post early on Thursday morning, the House of Representatives said it summoned Meta CEO Mark Zuckerberg to face the DICT to respond to its concerns surrounding harmful online content and platform accountability, alongside hopefully setting up measures to improve online safety for Philippine users.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Bottom Toolbar -->
+      <div class="toolbar">
+        <div id="lead-tools" class="tool-group">
+          <button class="tool-btn" onclick="highlight('who', 'var(--indigo)')"><div class="dot" style="background: var(--indigo);"></div> Isolate WHO</button>
+          <button class="tool-btn" onclick="highlight('what', 'var(--rose)')"><div class="dot" style="background: var(--rose);"></div> Isolate WHAT</button>
+          <button class="tool-btn" onclick="highlight('where', 'var(--emerald)')"><div class="dot" style="background: var(--emerald);"></div> Isolate WHERE</button>
+          <button class="tool-btn" onclick="highlight('when', 'var(--amber)')"><div class="dot" style="background: var(--amber);"></div> Isolate WHEN</button>
+        </div>
+        <div id="body-tools" class="tool-group">
+          <button class="tool-btn" style="border-color: rgba(6, 182, 212, 0.4);" onclick="highlight('how', 'var(--cyan)')"><div class="dot" style="background: var(--cyan);"></div> Isolate HOW</button>
+          <button class="tool-btn" style="border-color: rgba(217, 70, 239, 0.4);" onclick="highlight('why', 'var(--fuchsia)')"><div class="dot" style="background: var(--fuchsia);"></div> Isolate WHY</button>
+        </div>
+        <div id="tail-tools" class="tool-group">
+          <button class="tool-btn" style="border-color: rgba(80, 200, 120, 0.4);" onclick="highlight('context', 'var(--emerald)')"><div class="dot" style="background: var(--emerald);"></div> Highlight Context</button>
+        </div>
+        <button class="tool-btn" style="margin-left: auto;" onclick="resetLab()">
+          <div class="dot" style="background: var(--text-muted);"></div> Reset Lab
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Tab Logic for Pointers
+    function openTab(evt, tabName) {
+      const tabContents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove("active");
+      }
+
+      const tabBtns = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < tabBtns.length; i++) {
+        tabBtns[i].classList.remove("active");
+      }
+
+      document.getElementById(tabName).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+
+    // Lead Types Logic
+    function showLead(type) {
+      const buttons = document.querySelectorAll('.lead-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      document.getElementById('btn-' + type).classList.add('active');
+
+      const display = document.getElementById('lead-display');
+      
+      if (type === 'summary') {
+        display.innerHTML = `
+          <strong style="color: var(--indigo); font-family: 'Space Grotesk'; font-size: 1.3rem;">Summary Lead</strong><br>
+          The classic approach. Tells the reader what the story is about instantly without destroying the flow of the sentence. Remember: use short, simple declarative sentences and do not cram everything into one sentence. Never use an important/unusual word twice.
+          <div class="lead-example" style="border-left: 3px solid var(--indigo);">
+            "The city council unanimously approved a ₱500-million infrastructure budget Tuesday morning to rehabilitate the downtown drainage system before the rainy season begins."
+          </div>
+        `;
+      } else if (type === 'cartridge') {
+        display.innerHTML = `
+          <strong style="color: var(--rose); font-family: 'Space Grotesk'; font-size: 1.3rem;">Cartridge Lead</strong><br>
+          Short, abrupt, and definite. It tells the gist of the news with the use of the fewest words possible.
+          <div class="lead-example" style="border-left: 3px solid var(--rose);">
+            "The Mayor has officially resigned."
+          </div>
+        `;
+      } else if (type === 'punch') {
+        display.innerHTML = `
+          <strong style="color: var(--amber); font-family: 'Space Grotesk'; font-size: 1.3rem;">Punch Lead</strong><br>
+          Somewhat similar to the cartridge lead, but designed specifically to surprise and intrigue the reader right at the start.
+          <div class="lead-example" style="border-left: 3px solid var(--amber);">
+            "The undisputed champion has finally fallen."
+          </div>
+        `;
+      } else if (type === 'contrast') {
+        display.innerHTML = `
+          <strong style="color: var(--cyan); font-family: 'Space Grotesk'; font-size: 1.3rem;">Contrast Lead</strong><br>
+          Emphasizes a sharp juxtaposition to capture the audience's attention.
+          <div class="lead-example" style="border-left: 3px solid var(--cyan);">
+            "Ten years ago, he was sweeping the city streets. Today, he was sworn in as the city's newest mayor."
+          </div>
+        `;
+      } else if (type === 'staccato') {
+        display.innerHTML = `
+          <strong style="color: var(--emerald); font-family: 'Space Grotesk'; font-size: 1.3rem;">Staccato Lead</strong><br>
+          Emphasizes the time element, and usually consists of a series of phrases, punctuated by commas or dashes.
+          <div class="lead-example" style="border-left: 3px solid var(--emerald);">
+            "Midnight. A loud crash. Absolute silence. That was the sequence of events residents reported before the warehouse fire broke out."
+          </div>
+        `;
+      }
+    }
+
+    // Standalone Pyramid Logic
+    function showStandalonePyramid(layer) {
+      const text = document.getElementById('pyramid-text-standalone');
+      if (layer === 'lead') {
+        text.innerHTML = `<strong style="color: #bfa3ff; font-weight: 600;">"The Lead": The most important info.</strong><br>Who? What? Where? When? Why? How?<br>Approximately 30 words (1-2 thin paragraphs). May include a "hook" (provocative quote or question).`;
+      } else if (layer === 'body') {
+        text.innerHTML = `<strong style="color: #ff99cc; font-weight: 600;">"The Body": The crucial info.</strong><br>Argument, Controversy, Story, Issue.<br>Evidence, background, details, logic, etc. Quotes, photos, video, and audio that support, dispute, expand the topic.`;
+      } else {
+        text.innerHTML = `<strong style="color: var(--emerald); font-weight: 600;">"The Tail": extra info.</strong><br>Interesting/Related items. May include extra context.<br>In blogs, columns, and other editorials: the assessment of the journalist.`;
+      }
+    }
+
+    // Live Lab Logic
+    function analyzeLab(layer) {
+      const layers = document.querySelectorAll('.struct-layer');
+      const leadTools = document.getElementById('lead-tools');
+      const bodyTools = document.getElementById('body-tools');
+      const tailTools = document.getElementById('tail-tools');
+      const labText = document.getElementById('pyramid-text-lab');
+      
+      leadTools.style.display = 'none';
+      bodyTools.style.display = 'none';
+      tailTools.style.display = 'none';
+      highlight('clear');
+      
+      layers.forEach(el => {
+        el.style.opacity = '0.25';
+        el.style.paddingLeft = '0px';
+        el.style.borderLeftColor = 'transparent';
+      });
+
+      const targetLayer = document.getElementById(`layer-${layer}`);
+      if (targetLayer) {
+        targetLayer.style.opacity = '1';
+        targetLayer.style.paddingLeft = '20px';
+      }
+
+      if (layer === 'lead') {
+        leadTools.style.display = 'flex';
+        targetLayer.style.borderLeftColor = 'var(--indigo)';
+        labText.innerHTML = `<strong style="color: #bfa3ff;">The Lead:</strong> Contains the most important 5Ws and H.`;
+      } else if (layer === 'body') {
+        bodyTools.style.display = 'flex';
+        targetLayer.style.borderLeftColor = 'var(--rose)';
+        labText.innerHTML = `<strong style="color: #ff99cc;">The Body:</strong> Secondary information extending on the Why and How.`;
+      } else if (layer === 'tail') {
+        tailTools.style.display = 'flex';
+        targetLayer.style.borderLeftColor = 'var(--emerald)';
+        labText.innerHTML = `<strong style="color: var(--emerald);">The Tail:</strong> Background information and additional context.`;
+      }
+    }
+
+    function highlight(target, color) {
+      const allSpans = document.querySelectorAll('.article-text span');
+      allSpans.forEach(span => {
+        span.style.backgroundColor = 'transparent';
+        span.style.color = 'inherit';
+        span.style.padding = '0';
+      });
+
+      if (target === 'clear') return;
+
+      const targetSpans = document.querySelectorAll(`.t-${target}`);
+      targetSpans.forEach(span => {
+        span.style.backgroundColor = color;
+        span.style.color = (target === 'where' || target === 'when' || target === 'how' || target === 'context') ? '#000' : '#fff';
+        span.style.padding = '2px 6px';
+      });
+    }
+
+    function resetLab() {
+      const layers = document.querySelectorAll('.struct-layer');
+      layers.forEach(el => {
+        el.style.opacity = '1';
+        el.style.paddingLeft = '0px';
+        el.style.borderLeftColor = 'transparent';
+      });
+      
+      document.getElementById('lead-tools').style.display = 'none';
+      document.getElementById('body-tools').style.display = 'none';
+      document.getElementById('tail-tools').style.display = 'none';
+      document.getElementById('pyramid-text-lab').innerHTML = "Click the pyramid layers above to isolate and define the corresponding structural block in the text.";
+      
+      highlight('clear');
+    }
+  </script>
+
+</body>
+</html>
